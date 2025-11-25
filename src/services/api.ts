@@ -180,6 +180,7 @@ export const summarizationAPI = {
     try {
       const requestBody = {
         id: params.id,
+        model: params.model || 'cosmos-reason1',
         chunk_duration: params.chunk_duration,
         prompt: params.prompt,
         caption_summarization_prompt: params.caption_summarization_prompt || '',
