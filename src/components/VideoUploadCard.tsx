@@ -13,6 +13,7 @@ interface VideoUploadCardProps {
   fileId?: string | null;
   uploadProgress?: number;
   status?: 'idle' | 'uploading' | 'uploaded' | 'summarizing' | 'summarized' | 'error';
+  error?: string | null;
   isSelected?: boolean;
   onSelect?: (streamId: number) => void;
   isPrimary?: boolean;
@@ -25,6 +26,7 @@ const VideoUploadCard = ({
   fileId,
   uploadProgress = 0,
   status = 'idle',
+  error = null,
   isSelected = false,
   onSelect,
   isPrimary = false,
@@ -85,6 +87,18 @@ const VideoUploadCard = ({
       onVideoDelete(streamId);
     }
   };
+
+  // Clear video preview if upload fails
+  useEffect(() => {
+    if (status === 'error' && videoUrl && !fileId) {
+      URL.revokeObjectURL(videoUrl);
+      setVideoUrl(null);
+      setVideoFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  }, [status, fileId, videoUrl]);
 
   const handleCardClick = () => {
     if (videoFile && onSelect) {
@@ -203,6 +217,15 @@ const VideoUploadCard = ({
                 <Progress value={uploadProgress} className="h-1" />
                 <p className="text-[10px] text-white text-center mt-1">
                   Uploading {Math.round(uploadProgress)}%
+                </p>
+              </div>
+            )}
+
+            {/* Upload Error */}
+            {status === 'error' && error && (
+              <div className="absolute bottom-0 left-0 right-0 bg-destructive/90 backdrop-blur-sm p-2">
+                <p className="text-[10px] text-destructive-foreground text-center">
+                  {error}
                 </p>
               </div>
             )}
