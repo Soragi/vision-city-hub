@@ -244,7 +244,7 @@ const Index = () => {
                 <div>
                   <h2 className="text-base font-semibold text-foreground mb-0.5">Video Streams</h2>
                   <p className="text-xs text-muted-foreground">
-                    Upload videos, select for analysis, or check multiple for comparison
+                    Upload to Stream 1 (Primary) first. Other streams are optional for comparison.
                   </p>
                 </div>
               </div>
@@ -271,6 +271,7 @@ const Index = () => {
                         status={video?.status}
                         isSelected={selectedStreamId === streamId}
                         onSelect={setSelectedStreamId}
+                        isPrimary={streamId === 1}
                       />
                     </div>
                   );
@@ -287,7 +288,7 @@ const Index = () => {
                 settings={summarizationSettings}
                 onSettingsChange={setSummarizationSettings}
                 onSummarize={handleSummarize}
-                disabled={!selectedVideo?.fileId}
+                canSummarize={!!selectedVideo?.fileId}
                 isProcessing={selectedVideo?.status === 'summarizing'}
               />
             </div>

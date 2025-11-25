@@ -15,6 +15,7 @@ interface VideoUploadCardProps {
   status?: 'idle' | 'uploading' | 'uploaded' | 'summarizing' | 'summarized' | 'error';
   isSelected?: boolean;
   onSelect?: (streamId: number) => void;
+  isPrimary?: boolean;
 }
 
 const VideoUploadCard = ({
@@ -26,6 +27,7 @@ const VideoUploadCard = ({
   status = 'idle',
   isSelected = false,
   onSelect,
+  isPrimary = false,
 }: VideoUploadCardProps) => {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -139,10 +141,15 @@ const VideoUploadCard = ({
       )}
       onClick={handleCardClick}
     >
-      <div className="px-3 py-1.5 bg-secondary border-b border-video-border flex items-center justify-between">
+      <div className={cn(
+        "px-3 py-1.5 border-b border-video-border flex items-center justify-between",
+        isPrimary ? "bg-primary/10" : "bg-secondary"
+      )}>
         <div className="flex items-center gap-1.5">
-          <Video className="w-3.5 h-3.5 text-primary" />
-          <span className="text-xs font-semibold text-foreground">Stream {streamId}</span>
+          <Video className={cn("w-3.5 h-3.5", isPrimary ? "text-primary" : "text-primary")} />
+          <span className={cn("text-xs font-semibold", isPrimary ? "text-primary" : "text-foreground")}>
+            Stream {streamId} {isPrimary && "(Primary)"}
+          </span>
           {getStatusBadge()}
         </div>
         {videoFile && fileId && (
