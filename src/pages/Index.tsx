@@ -1,6 +1,7 @@
 import { useState } from "react";
 import VideoUploadCard from "@/components/VideoUploadCard";
 import ChatInterface from "@/components/ChatInterface";
+import AnalysisPanel from "@/components/AnalysisPanel";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
@@ -32,30 +33,39 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 overflow-auto p-8">
-          <div className="max-w-[1800px] mx-auto">
-            <div className="mb-6">
-              <h2 className="text-lg font-semibold text-foreground mb-2">Video Streams</h2>
-              <p className="text-sm text-muted-foreground">
-                Upload video files for each surveillance stream. The AI will analyze all streams simultaneously.
-              </p>
-            </div>
+      <main className="flex-1 flex overflow-hidden">
+        {/* Left Side - Video Grid */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-auto p-6">
+            <div className="h-full">
+              <div className="mb-4">
+                <h2 className="text-lg font-semibold text-foreground mb-1">Video Streams</h2>
+                <p className="text-sm text-muted-foreground">
+                  Upload video files for each surveillance stream
+                </p>
+              </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((streamId) => (
-                <VideoUploadCard
-                  key={streamId}
-                  streamId={streamId}
-                  onVideoUpload={handleVideoUpload}
-                />
-              ))}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((streamId) => (
+                  <VideoUploadCard
+                    key={streamId}
+                    streamId={streamId}
+                    onVideoUpload={handleVideoUpload}
+                  />
+                ))}
+              </div>
             </div>
+          </div>
+
+          {/* Bottom Chat Interface */}
+          <div className="h-[300px] border-t border-border">
+            <ChatInterface />
           </div>
         </div>
 
-        <div className="h-[400px] border-t border-border">
-          <ChatInterface />
+        {/* Right Side - Analysis Panel */}
+        <div className="w-[400px] hidden xl:block">
+          <AnalysisPanel />
         </div>
       </main>
     </div>
