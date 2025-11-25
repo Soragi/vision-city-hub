@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { chatAPI, type ChatMessage as APIChatMessage } from "@/services/api";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Message {
   id: string;
@@ -15,6 +17,8 @@ const ChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,16 +34,42 @@ const ChatInterface = () => {
     setInput("");
     setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      // Convert messages to API format
+      const apiMessages: APIChatMessage[] = messages.map(msg => ({
+        role: msg.role,
+        content: msg.content,
+      }));
+      
+      // Add current user message
+      apiMessages.push({
+        role: "user",
+        content: input,
+      });
+
+      // Call NVIDIA VSS backend
+      const responseContent = await chatAPI.sendMessage(apiMessages);
+
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "I'm analyzing the video streams. This is a placeholder response. Connect to Lovable Cloud to enable real AI vision analysis.",
+        content: responseContent,
       };
+      
       setMessages((prev) => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Failed to get AI response:', error);
+      toast({
+        title: "Error",
+        description: "Failed to connect to the video analysis backend. Please check if the backend is running.",
+        variant: "destructive",
+      });
+      
+      // Remove the user message on error
+      setMessages((prev) => prev.filter(msg => msg.id !== userMessage.id));
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
