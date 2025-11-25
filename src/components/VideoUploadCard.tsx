@@ -59,18 +59,18 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
   };
 
   return (
-    <div className="bg-card border border-video-border rounded-lg overflow-hidden">
-      <div className="px-3 py-2 bg-secondary border-b border-video-border flex items-center justify-between">
+    <div className="bg-card border border-video-border rounded-lg overflow-hidden h-full min-h-[280px]">
+      <div className="px-4 py-2 bg-secondary border-b border-video-border flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Video className="w-4 h-4 text-primary" />
-          <span className="text-sm font-medium text-foreground">Stream {streamId}</span>
+          <span className="text-sm font-semibold text-foreground">Stream {streamId}</span>
         </div>
         {videoFile && (
           <Button
             variant="ghost"
             size="sm"
             onClick={handleRemoveVideo}
-            className="h-6 w-6 p-0 hover:bg-muted"
+            className="h-7 w-7 p-0 hover:bg-muted"
           >
             <X className="w-4 h-4" />
           </Button>
@@ -79,8 +79,8 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
 
       <div
         className={cn(
-          "relative aspect-video bg-video-bg flex items-center justify-center transition-colors",
-          isDragging && "bg-secondary/50"
+          "relative aspect-video bg-video-bg flex items-center justify-center transition-all duration-200",
+          isDragging && "bg-secondary/50 border-2 border-primary border-dashed"
         )}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -93,22 +93,24 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
             className="w-full h-full object-contain"
           />
         ) : (
-          <div className="flex flex-col items-center justify-center gap-3 p-6">
-            <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
-              <Upload className="w-6 h-6 text-muted-foreground" />
+          <div className="flex flex-col items-center justify-center gap-4 p-8">
+            <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center">
+              <Upload className="w-8 h-8 text-primary" />
             </div>
-            <div className="text-center space-y-1">
-              <p className="text-sm text-foreground">Drop video here</p>
-              <p className="text-xs text-muted-foreground">or</p>
+            <div className="text-center space-y-2">
+              <p className="text-base font-medium text-foreground">Drop video here</p>
+              <p className="text-sm text-muted-foreground">or</p>
               <Button
                 variant="outline"
-                size="sm"
+                size="default"
                 onClick={() => fileInputRef.current?.click()}
-                className="border-border hover:bg-secondary"
+                className="border-border hover:bg-secondary hover:border-primary"
               >
-                Click to Upload
+                <Upload className="w-4 h-4 mr-2" />
+                Browse Files
               </Button>
             </div>
+            <p className="text-xs text-muted-foreground">MP4, AVI, MOV supported</p>
           </div>
         )}
         <input
