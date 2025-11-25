@@ -36,16 +36,16 @@ const Index = () => {
       <main className="flex-1 flex overflow-hidden">
         {/* Left Side - Video Grid */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-auto p-6">
+          <div className="flex-1 overflow-auto p-4">
             <div className="h-full">
-              <div className="mb-4">
-                <h2 className="text-lg font-semibold text-foreground mb-1">Video Streams</h2>
-                <p className="text-sm text-muted-foreground">
+              <div className="mb-3">
+                <h2 className="text-base font-semibold text-foreground mb-0.5">Video Streams</h2>
+                <p className="text-xs text-muted-foreground">
                   Upload video files for each surveillance stream
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-4">
+              <div className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((streamId) => (
                   <VideoUploadCard
                     key={streamId}
@@ -58,13 +58,13 @@ const Index = () => {
           </div>
 
           {/* Bottom Chat Interface */}
-          <div className="h-[300px] border-t border-border">
+          <div className="h-[240px] border-t border-border">
             <ChatInterface />
           </div>
         </div>
 
         {/* Right Side - Analysis Panel */}
-        <div className="w-[400px] hidden xl:block">
+        <div className="w-[320px] hidden xl:block">
           <AnalysisPanel />
         </div>
       </main>
