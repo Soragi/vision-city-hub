@@ -178,7 +178,7 @@ export const summarizationAPI = {
     onProgress?: (chunk: string) => void
   ): Promise<string> {
     try {
-      const requestBody = {
+      const requestBody: any = {
         id: params.id,
         chunk_duration: params.chunk_duration,
         prompt: params.prompt,
@@ -187,9 +187,13 @@ export const summarizationAPI = {
         enable_chat: params.enable_chat ?? true,
         enable_chat_history: params.enable_chat_history ?? true,
         enable_audio: params.enable_audio ?? false,
-        model: params.model,
         stream: true,
       };
+
+      // Only include model if it's specified
+      if (params.model) {
+        requestBody.model = params.model;
+      }
 
       const response = await fetch(`${API_BASE_URL}/summarize`, {
         method: 'POST',
