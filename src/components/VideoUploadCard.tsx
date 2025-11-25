@@ -1,7 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Upload, X, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 
 interface VideoUploadCardProps {
   streamId: number;
@@ -12,7 +13,10 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -53,26 +57,52 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
     }
     setVideoFile(null);
     setVideoUrl(null);
+    setCurrentTime(0);
+    setDuration(0);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleTimeUpdate = () => setCurrentTime(video.currentTime);
+    const handleLoadedMetadata = () => setDuration(video.duration);
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    };
+  }, [videoUrl]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const recordingDate = videoFile ? format(new Date(videoFile.lastModified), 'MMM dd, yyyy HH:mm') : '';
+
   return (
-    <div className="bg-card border border-video-border rounded-lg overflow-hidden h-full min-h-[280px]">
-      <div className="px-4 py-2 bg-secondary border-b border-video-border flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Video className="w-4 h-4 text-primary" />
-          <span className="text-sm font-semibold text-foreground">Stream {streamId}</span>
+    <div className="bg-card border border-video-border rounded-lg overflow-hidden h-full">
+      <div className="px-3 py-1.5 bg-secondary border-b border-video-border flex items-center justify-between">
+        <div className="flex items-center gap-1.5">
+          <Video className="w-3.5 h-3.5 text-primary" />
+          <span className="text-xs font-semibold text-foreground">Stream {streamId}</span>
         </div>
         {videoFile && (
           <Button
             variant="ghost"
             size="sm"
             onClick={handleRemoveVideo}
-            className="h-7 w-7 p-0 hover:bg-muted"
+            className="h-6 w-6 p-0 hover:bg-muted"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </Button>
         )}
       </div>
@@ -88,31 +118,44 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
         onDrop={handleDrop}
       >
         {videoUrl ? (
-          <video
-            src={videoUrl}
-            controls
-            className="w-full h-full object-cover"
-            style={{ aspectRatio: '16/9' }}
-          />
-        ) : (
-          <div className="flex flex-col items-center justify-center gap-4 p-8">
-            <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center">
-              <Upload className="w-8 h-8 text-primary" />
+          <>
+            <video
+              ref={videoRef}
+              src={videoUrl}
+              controls
+              className="w-full h-full object-cover"
+              style={{ aspectRatio: '16/9' }}
+            />
+            {/* Timestamp Overlay */}
+            <div className="absolute top-2 left-2 bg-black/75 backdrop-blur-sm px-2 py-1 rounded text-xs font-mono text-white space-y-0.5">
+              <div className="flex items-center gap-1.5">
+                <span className="text-primary">●</span>
+                <span>{formatTime(currentTime)} / {formatTime(duration)}</span>
+              </div>
+              {recordingDate && (
+                <div className="text-[10px] text-gray-300">{recordingDate}</div>
+              )}
             </div>
-            <div className="text-center space-y-2">
-              <p className="text-base font-medium text-foreground">Drop video here</p>
-              <p className="text-sm text-muted-foreground">or</p>
+          </>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-2 p-4">
+            <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+              <Upload className="w-5 h-5 text-primary" />
+            </div>
+            <div className="text-center space-y-1">
+              <p className="text-xs font-medium text-foreground">Drop video here</p>
+              <p className="text-[10px] text-muted-foreground">or</p>
               <Button
                 variant="outline"
-                size="default"
+                size="sm"
                 onClick={() => fileInputRef.current?.click()}
-                className="border-border hover:bg-secondary hover:border-primary"
+                className="border-border hover:bg-secondary hover:border-primary h-7 text-xs"
               >
-                <Upload className="w-4 h-4 mr-2" />
-                Browse Files
+                <Upload className="w-3 h-3 mr-1.5" />
+                Browse
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground">MP4, AVI, MOV supported</p>
+            <p className="text-[10px] text-muted-foreground">MP4, AVI, MOV</p>
           </div>
         )}
         <input

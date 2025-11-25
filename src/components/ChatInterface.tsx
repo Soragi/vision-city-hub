@@ -51,15 +51,15 @@ const ChatInterface = () => {
 
   return (
     <div className="bg-chat-bg border-t border-border flex flex-col h-full">
-      <div className="px-6 py-3 border-b border-border">
-        <h2 className="text-sm font-semibold text-foreground">Video Analysis AI Assistant</h2>
+      <div className="px-4 py-2 border-b border-border">
+        <h2 className="text-xs font-semibold text-foreground">Video Analysis AI Assistant</h2>
       </div>
 
-      <ScrollArea className="flex-1 p-6">
-        <div className="space-y-4">
+      <ScrollArea className="flex-1 p-4">
+        <div className="space-y-2">
           {messages.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground text-sm">
+            <div className="text-center py-4">
+              <p className="text-muted-foreground text-xs">
                 Ask questions about the video streams to get AI-powered insights
               </p>
             </div>
@@ -74,24 +74,24 @@ const ChatInterface = () => {
               >
                 <div
                   className={cn(
-                    "max-w-[80%] rounded-lg px-4 py-2",
+                    "max-w-[80%] rounded-lg px-3 py-1.5",
                     message.role === "user"
                       ? "bg-primary text-primary-foreground"
                       : "bg-secondary text-foreground"
                   )}
                 >
-                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                  <p className="text-xs whitespace-pre-wrap">{message.content}</p>
                 </div>
               </div>
             ))
           )}
           {isLoading && (
             <div className="flex gap-3 justify-start">
-              <div className="bg-secondary text-foreground rounded-lg px-4 py-2">
+              <div className="bg-secondary text-foreground rounded-lg px-3 py-1.5">
                 <div className="flex gap-1">
-                  <div className="w-2 h-2 rounded-full bg-muted-foreground animate-pulse" />
-                  <div className="w-2 h-2 rounded-full bg-muted-foreground animate-pulse delay-100" />
-                  <div className="w-2 h-2 rounded-full bg-muted-foreground animate-pulse delay-200" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-pulse" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-pulse delay-100" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-pulse delay-200" />
                 </div>
               </div>
             </div>
@@ -99,19 +99,19 @@ const ChatInterface = () => {
         </div>
       </ScrollArea>
 
-      <form onSubmit={handleSubmit} className="p-4 border-t border-border">
-        <div className="flex gap-3">
+      <form onSubmit={handleSubmit} className="p-3 border-t border-border">
+        <div className="flex gap-2">
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask a question about the video streams..."
-            className="min-h-[60px] resize-none bg-chat-input border-border text-foreground placeholder:text-muted-foreground"
+            className="min-h-[50px] resize-none bg-chat-input border-border text-xs text-foreground placeholder:text-muted-foreground"
           />
           <Button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground h-[50px] w-[50px] p-0"
           >
             <Send className="w-4 h-4" />
           </Button>

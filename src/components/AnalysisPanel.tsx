@@ -46,18 +46,18 @@ const AnalysisPanel = () => {
 
   return (
     <div className="h-full flex flex-col bg-card border-l border-border">
-      <div className="p-6 border-b border-border">
-        <h2 className="text-lg font-semibold text-foreground mb-4">Real-Time Analysis</h2>
+      <div className="p-4 border-b border-border">
+        <h2 className="text-sm font-semibold text-foreground mb-3">Real-Time Analysis</h2>
         
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2">
           {stats.map((stat) => (
-            <Card key={stat.label} className="p-3 bg-secondary border-border">
+            <Card key={stat.label} className="p-2 bg-secondary border-border">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-xs text-muted-foreground mb-1">{stat.label}</p>
-                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-[10px] text-muted-foreground mb-0.5">{stat.label}</p>
+                  <p className="text-lg font-bold text-foreground">{stat.value}</p>
                 </div>
-                <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                <stat.icon className={`w-4 h-4 ${stat.color}`} />
               </div>
             </Card>
           ))}
@@ -65,18 +65,18 @@ const AnalysisPanel = () => {
       </div>
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="px-6 py-3 border-b border-border">
-          <h3 className="text-sm font-medium text-foreground">Activity Feed</h3>
+        <div className="px-4 py-2 border-b border-border">
+          <h3 className="text-xs font-medium text-foreground">Activity Feed</h3>
         </div>
 
-        <ScrollArea className="flex-1 px-6 py-4">
-          <div className="space-y-3">
+        <ScrollArea className="flex-1 px-4 py-3">
+          <div className="space-y-2">
             {mockEvents.map((event) => (
               <div
                 key={event.id}
-                className="p-3 rounded-lg bg-secondary border border-border hover:border-primary/50 transition-colors"
+                className="p-2 rounded-lg bg-secondary border border-border hover:border-primary/50 transition-colors"
               >
-                <div className="flex items-start justify-between mb-2">
+                <div className="flex items-start justify-between mb-1">
                   <Badge
                     variant={
                       event.type === "alert"
@@ -85,18 +85,18 @@ const AnalysisPanel = () => {
                         ? "default"
                         : "secondary"
                     }
-                    className="text-xs"
+                    className="text-[10px] h-4"
                   >
                     Stream {event.streamId}
                   </Badge>
-                  <span className="text-xs text-muted-foreground">{event.timestamp}</span>
+                  <span className="text-[10px] text-muted-foreground">{event.timestamp}</span>
                 </div>
-                <p className="text-sm text-foreground">{event.description}</p>
+                <p className="text-xs text-foreground leading-snug">{event.description}</p>
               </div>
             ))}
 
-            <div className="text-center py-8">
-              <p className="text-xs text-muted-foreground">
+            <div className="text-center py-4">
+              <p className="text-[10px] text-muted-foreground">
                 Connect AI to see real-time analysis
               </p>
             </div>
