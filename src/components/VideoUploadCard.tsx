@@ -79,7 +79,8 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
 
       <div
         className={cn(
-          "relative aspect-video bg-video-bg flex items-center justify-center transition-all duration-200",
+          "relative w-full bg-video-bg flex items-center justify-center transition-all duration-200",
+          "aspect-[16/9]",
           isDragging && "bg-secondary/50 border-2 border-primary border-dashed"
         )}
         onDragOver={handleDragOver}
@@ -90,7 +91,8 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
           <video
             src={videoUrl}
             controls
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
+            style={{ aspectRatio: '16/9' }}
           />
         ) : (
           <div className="flex flex-col items-center justify-center gap-4 p-8">
