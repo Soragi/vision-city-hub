@@ -29,6 +29,7 @@ const Index = () => {
       file,
       status: 'uploading',
       uploadProgress: 0,
+      error: null,
     });
 
     try {
@@ -40,24 +41,27 @@ const Index = () => {
         fileId: fileInfo.id,
         status: 'uploaded',
         uploadProgress: 100,
+        error: null,
       });
 
       toast({
-        title: "Video Uploaded",
-        description: `Stream ${streamId}: ${file.name}`,
+        title: "✓ Video Uploaded Successfully",
+        description: `Stream ${streamId}: ${file.name} is ready for analysis`,
       });
 
       // Auto-select the uploaded video
       setSelectedStreamId(streamId);
     } catch (error) {
       console.error('Upload failed:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Upload failed';
       updateVideo(streamId, {
         status: 'error',
-        error: 'Upload failed',
+        error: errorMessage,
+        fileId: null,
       });
       toast({
         title: "Upload Failed",
-        description: `Failed to upload ${file.name}`,
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -268,6 +272,7 @@ const Index = () => {
                         fileId={video?.fileId}
                         uploadProgress={video?.uploadProgress}
                         status={video?.status}
+                        error={video?.error}
                         isSelected={selectedStreamId === streamId}
                         onSelect={setSelectedStreamId}
                         isPrimary={streamId === 1}

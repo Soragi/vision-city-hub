@@ -107,15 +107,30 @@ export const fileAPI = {
 
         xhr.addEventListener('load', () => {
           if (xhr.status >= 200 && xhr.status < 300) {
-            const response = JSON.parse(xhr.responseText);
-            resolve(response);
+            try {
+              const response = JSON.parse(xhr.responseText);
+              resolve(response);
+            } catch (error) {
+              reject(new Error('Invalid response from server'));
+            }
           } else {
-            reject(new Error(`Upload failed: ${xhr.status} ${xhr.statusText}`));
+            try {
+              const errorResponse = JSON.parse(xhr.responseText);
+              const errorMessage = errorResponse.detail || errorResponse.error || `Upload failed with status ${xhr.status}`;
+              reject(new Error(errorMessage));
+            } catch {
+              reject(new Error(`Upload failed with status ${xhr.status}`));
+            }
           }
         });
 
-        xhr.addEventListener('error', () => reject(new Error('Upload failed')));
-        xhr.addEventListener('abort', () => reject(new Error('Upload aborted')));
+        xhr.addEventListener('error', () => {
+          reject(new Error('Failed to connect to the video analysis backend. Please check if the backend is running.'));
+        });
+
+        xhr.addEventListener('abort', () => {
+          reject(new Error('Upload was cancelled'));
+        });
 
         xhr.open('POST', `${API_BASE_URL}/files`);
         xhr.send(formData);
