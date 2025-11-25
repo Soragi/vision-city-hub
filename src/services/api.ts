@@ -200,6 +200,9 @@ export const summarizationAPI = {
         body: JSON.stringify(requestBody),
       });
 
+      // Backward-compat alias to avoid ReferenceError in any compiled code
+      const response = res;
+
       if (!res.ok) {
         throw new Error(`Summarize failed: ${res.status} ${res.statusText}`);
       }
