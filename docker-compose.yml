@@ -12,7 +12,6 @@ services:
       - "3000:80"
     environment:
       - NODE_ENV=production
-      - VITE_BACKEND_URL=http://via-server:${BACKEND_PORT:-8001}
     restart: unless-stopped
     container_name: municipal-video-ai-frontend
     networks:

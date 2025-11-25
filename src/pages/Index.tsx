@@ -4,6 +4,7 @@ import VideoUploadCard from "@/components/VideoUploadCard";
 import ChatInterface from "@/components/ChatInterface";
 import ResponsePanel from "@/components/ResponsePanel";
 import SummarizationSettings from "@/components/SummarizationSettings";
+import { BackendHealthCheck } from "@/components/BackendHealthCheck";
 import { Button } from "@/components/ui/button";
 import { GitCompareArrows } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -240,8 +241,13 @@ const Index = () => {
       <main className="flex-1 flex overflow-hidden">
         {/* Left Side - Video Grid and Settings */}
         <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Backend Health Check */}
+          <div className="px-4 pt-4">
+            <BackendHealthCheck />
+          </div>
+          
           {/* Video Grid */}
-          <div className="flex-1 overflow-auto p-4">
+          <div className="flex-1 overflow-auto p-4 pt-0">{/* ... keep existing code */}
             <div className="h-full">
               <div className="mb-3 flex items-center justify-between">
                 <div>
