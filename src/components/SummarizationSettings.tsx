@@ -13,7 +13,7 @@ interface SummarizationSettingsProps {
   settings: SettingsType;
   onSettingsChange: (settings: SettingsType) => void;
   onSummarize: () => void;
-  disabled?: boolean;
+  canSummarize?: boolean;
   isProcessing?: boolean;
 }
 
@@ -21,7 +21,7 @@ const SummarizationSettings = ({
   settings,
   onSettingsChange,
   onSummarize,
-  disabled = false,
+  canSummarize = false,
   isProcessing = false,
 }: SummarizationSettingsProps) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -46,7 +46,6 @@ const SummarizationSettings = ({
           <Select
             value={settings.chunkDuration.toString()}
             onValueChange={(val) => updateSetting('chunkDuration', parseInt(val))}
-            disabled={disabled}
           >
             <SelectTrigger id="chunk-duration" className="h-9 text-xs">
               <SelectValue />
@@ -72,7 +71,6 @@ const SummarizationSettings = ({
             onChange={(e) => updateSetting('prompt', e.target.value)}
             placeholder="Describe what you want the AI to analyze..."
             className="min-h-[80px] text-xs resize-none"
-            disabled={disabled}
           />
         </div>
 
@@ -86,7 +84,6 @@ const SummarizationSettings = ({
               id="enable-chat"
               checked={settings.enableChat}
               onCheckedChange={(val) => updateSetting('enableChat', val)}
-              disabled={disabled}
             />
           </div>
 
@@ -98,7 +95,6 @@ const SummarizationSettings = ({
               id="enable-chat-history"
               checked={settings.enableChatHistory}
               onCheckedChange={(val) => updateSetting('enableChatHistory', val)}
-              disabled={disabled}
             />
           </div>
 
@@ -110,7 +106,6 @@ const SummarizationSettings = ({
               id="enable-audio"
               checked={settings.enableAudio}
               onCheckedChange={(val) => updateSetting('enableAudio', val)}
-              disabled={disabled}
             />
           </div>
         </div>
@@ -138,7 +133,6 @@ const SummarizationSettings = ({
                 onChange={(e) => updateSetting('systemPrompt', e.target.value)}
                 placeholder="System-level instructions for the AI..."
                 className="min-h-[60px] text-xs resize-none"
-                disabled={disabled}
               />
             </div>
 
@@ -152,7 +146,6 @@ const SummarizationSettings = ({
                 onChange={(e) => updateSetting('captionSummarizationPrompt', e.target.value)}
                 placeholder="Custom caption summarization instructions..."
                 className="min-h-[60px] text-xs resize-none"
-                disabled={disabled}
               />
             </div>
 
@@ -166,7 +159,6 @@ const SummarizationSettings = ({
                 onChange={(e) => updateSetting('summaryAggregationPrompt', e.target.value)}
                 placeholder="Custom aggregation instructions..."
                 className="min-h-[60px] text-xs resize-none"
-                disabled={disabled}
               />
             </div>
           </CollapsibleContent>
@@ -175,7 +167,7 @@ const SummarizationSettings = ({
         {/* Summarize Button */}
         <Button
           onClick={onSummarize}
-          disabled={disabled || isProcessing}
+          disabled={!canSummarize || isProcessing}
           className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
         >
           {isProcessing ? "Processing..." : "Summarize Video"}
