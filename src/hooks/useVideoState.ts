@@ -29,7 +29,7 @@ export const DEFAULT_SUMMARIZATION_SETTINGS: SummarizationSettings = {
   enableChat: true,
   enableChatHistory: true,
   enableAudio: false,
-  model: 'vila-1.5',
+  model: '', // Let backend use default model
 };
 
 export const useVideoState = () => {
