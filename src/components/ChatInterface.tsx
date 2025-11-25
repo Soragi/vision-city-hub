@@ -13,12 +13,25 @@ interface Message {
   content: string;
 }
 
-const ChatInterface = () => {
+interface ChatInterfaceProps {
+  fileId?: string | null;
+  onResetChat?: () => void;
+}
+
+const ChatInterface = ({ fileId, onResetChat }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
+
+  const resetChat = () => {
+    setMessages([]);
+    setInput("");
+    if (onResetChat) {
+      onResetChat();
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,8 +60,8 @@ const ChatInterface = () => {
         content: input,
       });
 
-      // Call NVIDIA VSS backend
-      const responseContent = await chatAPI.sendMessage(apiMessages);
+      // Call NVIDIA VSS backend with file context if available
+      const responseContent = await chatAPI.sendMessage(apiMessages, fileId || undefined);
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),

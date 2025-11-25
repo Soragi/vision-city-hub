@@ -1,15 +1,32 @@
 import { useState, useRef, useEffect } from "react";
-import { Upload, X, Video } from "lucide-react";
+import { Upload, X, Video, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { Progress } from "@/components/ui/progress";
 
 interface VideoUploadCardProps {
   streamId: number;
   onVideoUpload: (streamId: number, file: File) => void;
+  onVideoDelete?: (streamId: number) => void;
+  fileId?: string | null;
+  uploadProgress?: number;
+  status?: 'idle' | 'uploading' | 'uploaded' | 'summarizing' | 'summarized' | 'error';
+  isSelected?: boolean;
+  onSelect?: (streamId: number) => void;
 }
 
-const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
+const VideoUploadCard = ({
+  streamId,
+  onVideoUpload,
+  onVideoDelete,
+  fileId,
+  uploadProgress = 0,
+  status = 'idle',
+  isSelected = false,
+  onSelect,
+}: VideoUploadCardProps) => {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -62,6 +79,32 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+    if (onVideoDelete) {
+      onVideoDelete(streamId);
+    }
+  };
+
+  const handleCardClick = () => {
+    if (videoFile && onSelect) {
+      onSelect(streamId);
+    }
+  };
+
+  const getStatusBadge = () => {
+    switch (status) {
+      case 'uploading':
+        return <Badge variant="secondary" className="text-[10px] h-4">Uploading</Badge>;
+      case 'uploaded':
+        return <Badge variant="default" className="text-[10px] h-4">Uploaded</Badge>;
+      case 'summarizing':
+        return <Badge variant="default" className="text-[10px] h-4 animate-pulse">Processing</Badge>;
+      case 'summarized':
+        return <Badge variant="default" className="text-[10px] h-4 bg-green-600">Analyzed</Badge>;
+      case 'error':
+        return <Badge variant="destructive" className="text-[10px] h-4">Error</Badge>;
+      default:
+        return null;
+    }
   };
 
   useEffect(() => {
@@ -89,20 +132,30 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
   const recordingDate = videoFile ? format(new Date(videoFile.lastModified), 'MMM dd, yyyy HH:mm') : '';
 
   return (
-    <div className="bg-card border border-video-border rounded-lg overflow-hidden h-full">
+    <div
+      className={cn(
+        "bg-card border rounded-lg overflow-hidden h-full transition-all cursor-pointer",
+        isSelected ? "border-primary ring-2 ring-primary/20" : "border-video-border hover:border-primary/50"
+      )}
+      onClick={handleCardClick}
+    >
       <div className="px-3 py-1.5 bg-secondary border-b border-video-border flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <Video className="w-3.5 h-3.5 text-primary" />
           <span className="text-xs font-semibold text-foreground">Stream {streamId}</span>
+          {getStatusBadge()}
         </div>
-        {videoFile && (
+        {videoFile && fileId && (
           <Button
             variant="ghost"
             size="sm"
-            onClick={handleRemoveVideo}
-            className="h-6 w-6 p-0 hover:bg-muted"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRemoveVideo();
+            }}
+            className="h-6 w-6 p-0 hover:bg-destructive hover:text-destructive-foreground"
           >
-            <X className="w-3.5 h-3.5" />
+            <Trash2 className="w-3.5 h-3.5" />
           </Button>
         )}
       </div>
@@ -136,6 +189,16 @@ const VideoUploadCard = ({ streamId, onVideoUpload }: VideoUploadCardProps) => {
                 <div className="text-[10px] text-gray-300">{recordingDate}</div>
               )}
             </div>
+
+            {/* Upload Progress */}
+            {status === 'uploading' && (
+              <div className="absolute bottom-0 left-0 right-0 bg-black/75 backdrop-blur-sm p-2">
+                <Progress value={uploadProgress} className="h-1" />
+                <p className="text-[10px] text-white text-center mt-1">
+                  Uploading {Math.round(uploadProgress)}%
+                </p>
+              </div>
+            )}
           </>
         ) : (
           <div className="flex flex-col items-center justify-center gap-2 p-4">
