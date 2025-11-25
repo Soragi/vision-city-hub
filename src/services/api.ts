@@ -192,7 +192,7 @@ export const summarizationAPI = {
       };
 
 
-      const response = await fetch(`${API_BASE_URL}/summarize`, {
+      const res = await fetch(`${API_BASE_URL}/summarize`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -200,12 +200,12 @@ export const summarizationAPI = {
         body: JSON.stringify(requestBody),
       });
 
-      if (!response.ok) {
-        throw new Error(`Summarize failed: ${response.status} ${response.statusText}`);
+      if (!res.ok) {
+        throw new Error(`Summarize failed: ${res.status} ${res.statusText}`);
       }
 
       // Handle SSE streaming
-      const reader = response.body?.getReader();
+      const reader = res.body?.getReader();
       const decoder = new TextDecoder();
       let summary = '';
 
