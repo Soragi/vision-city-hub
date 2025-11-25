@@ -1,14 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import VideoUploadCard from "@/components/VideoUploadCard";
 import ChatInterface from "@/components/ChatInterface";
 import ResponsePanel from "@/components/ResponsePanel";
 import SummarizationSettings from "@/components/SummarizationSettings";
+import { Button } from "@/components/ui/button";
+import { GitCompareArrows } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useVideoState } from "@/hooks/useVideoState";
 import { fileAPI, summarizationAPI } from "@/services/api";
 
 const Index = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const {
     videos,
     updateVideo,
@@ -18,6 +22,7 @@ const Index = () => {
     selectedStreamId,
     setSelectedStreamId,
   } = useVideoState();
+  const [selectedForComparison, setSelectedForComparison] = useState<number[]>([]);
 
   const handleVideoUpload = async (streamId: number, file: File) => {
     updateVideo(streamId, {
@@ -156,6 +161,49 @@ const Index = () => {
 
   const selectedVideo = selectedStreamId ? videos.get(selectedStreamId) : undefined;
 
+  const handleCompareSelected = () => {
+    const videosToCompare = selectedForComparison
+      .map((streamId) => {
+        const video = videos.get(streamId);
+        if (!video?.file) return null;
+        return {
+          streamId,
+          file: video.file,
+          fileId: video.fileId,
+        };
+      })
+      .filter(Boolean);
+
+    if (videosToCompare.length < 2) {
+      toast({
+        title: "Not Enough Videos",
+        description: "Please select at least 2 videos to compare",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    navigate('/comparison', { state: { videos: videosToCompare } });
+  };
+
+  const toggleComparisonSelection = (streamId: number) => {
+    setSelectedForComparison((prev) => {
+      if (prev.includes(streamId)) {
+        return prev.filter((id) => id !== streamId);
+      } else {
+        if (prev.length >= 4) {
+          toast({
+            title: "Maximum Reached",
+            description: "You can compare up to 4 videos at once",
+            variant: "destructive",
+          });
+          return prev;
+        }
+        return [...prev, streamId];
+      }
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="bg-card border-b border-border px-8 py-4">
@@ -171,6 +219,19 @@ const Index = () => {
           <div className="h-6 w-px bg-border mx-2" />
           <span className="text-sm text-muted-foreground">AI Video Analysis Agent</span>
         </div>
+        <div className="flex items-center gap-2">
+          {selectedForComparison.length > 0 && (
+            <Button
+              variant="default"
+              size="sm"
+              onClick={handleCompareSelected}
+              disabled={selectedForComparison.length < 2}
+            >
+              <GitCompareArrows className="w-4 h-4 mr-2" />
+              Compare {selectedForComparison.length} Videos
+            </Button>
+          )}
+        </div>
       </header>
 
       <main className="flex-1 flex overflow-hidden">
@@ -179,28 +240,39 @@ const Index = () => {
           {/* Video Grid */}
           <div className="flex-1 overflow-auto p-4">
             <div className="h-full">
-              <div className="mb-3">
-                <h2 className="text-base font-semibold text-foreground mb-0.5">Video Streams</h2>
-                <p className="text-xs text-muted-foreground">
-                  Upload video files and select one to analyze
-                </p>
+              <div className="mb-3 flex items-center justify-between">
+                <div>
+                  <h2 className="text-base font-semibold text-foreground mb-0.5">Video Streams</h2>
+                  <p className="text-xs text-muted-foreground">
+                    Upload videos, select for analysis, or check multiple for comparison
+                  </p>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((streamId) => {
                   const video = videos.get(streamId);
                   return (
-                    <VideoUploadCard
-                      key={streamId}
-                      streamId={streamId}
-                      onVideoUpload={handleVideoUpload}
-                      onVideoDelete={handleVideoDelete}
-                      fileId={video?.fileId}
-                      uploadProgress={video?.uploadProgress}
-                      status={video?.status}
-                      isSelected={selectedStreamId === streamId}
-                      onSelect={setSelectedStreamId}
-                    />
+                    <div key={streamId} className="relative">
+                      {video?.file && (
+                        <input
+                          type="checkbox"
+                          checked={selectedForComparison.includes(streamId)}
+                          onChange={() => toggleComparisonSelection(streamId)}
+                          className="absolute top-2 right-2 z-10 w-4 h-4 cursor-pointer"
+                        />
+                      )}
+                      <VideoUploadCard
+                        streamId={streamId}
+                        onVideoUpload={handleVideoUpload}
+                        onVideoDelete={handleVideoDelete}
+                        fileId={video?.fileId}
+                        uploadProgress={video?.uploadProgress}
+                        status={video?.status}
+                        isSelected={selectedStreamId === streamId}
+                        onSelect={setSelectedStreamId}
+                      />
+                    </div>
                   );
                 })}
               </div>
