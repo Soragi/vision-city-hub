@@ -89,6 +89,8 @@ export const chatAPI = {
 
 export const fileAPI = {
   async uploadFile(file: File, onProgress?: (progress: number) => void): Promise<FileInfo> {
+    console.log('[API] Uploading file:', { name: file.name, size: file.size, type: file.type });
+    
     const formData = new FormData();
     formData.append('file', file);
     formData.append('purpose', 'vision');
@@ -106,29 +108,37 @@ export const fileAPI = {
         });
 
         xhr.addEventListener('load', () => {
+          console.log('[API] Upload response:', { status: xhr.status, statusText: xhr.statusText });
+          
           if (xhr.status >= 200 && xhr.status < 300) {
             try {
               const response = JSON.parse(xhr.responseText);
+              console.log('[API] Upload successful:', response);
               resolve(response);
             } catch (error) {
+              console.error('[API] Invalid JSON response:', xhr.responseText);
               reject(new Error('Invalid response from server'));
             }
           } else {
             try {
               const errorResponse = JSON.parse(xhr.responseText);
               const errorMessage = errorResponse.detail || errorResponse.error || `Upload failed with status ${xhr.status}`;
+              console.error('[API] Upload failed:', { status: xhr.status, error: errorResponse });
               reject(new Error(errorMessage));
             } catch {
+              console.error('[API] Upload failed with non-JSON error:', xhr.responseText);
               reject(new Error(`Upload failed with status ${xhr.status}`));
             }
           }
         });
 
         xhr.addEventListener('error', () => {
+          console.error('[API] Network error during upload');
           reject(new Error('Failed to connect to the video analysis backend. Please check if the backend is running.'));
         });
 
         xhr.addEventListener('abort', () => {
+          console.warn('[API] Upload was cancelled');
           reject(new Error('Upload was cancelled'));
         });
 
@@ -191,6 +201,7 @@ export const summarizationAPI = {
         stream: true,
       };
 
+      console.log('[API] Starting summarization:', requestBody);
 
       const res = await fetch(`${API_BASE_URL}/summarize`, {
         method: 'POST',
@@ -200,10 +211,11 @@ export const summarizationAPI = {
         body: JSON.stringify(requestBody),
       });
 
-      // Backward-compat alias to avoid ReferenceError in any compiled code
-      const response = res;
+      console.log('[API] Summarization response:', { status: res.status, statusText: res.statusText, headers: Object.fromEntries(res.headers.entries()) });
 
       if (!res.ok) {
+        const errorText = await res.text();
+        console.error('[API] Summarization failed:', { status: res.status, error: errorText });
         throw new Error(`Summarize failed: ${res.status} ${res.statusText}`);
       }
 
@@ -249,13 +261,21 @@ export const summarizationAPI = {
 
   async getModels(): Promise<Model[]> {
     try {
+      console.log('[API] Fetching available models...');
+      
       const response = await fetch(`${API_BASE_URL}/models`);
 
+      console.log('[API] Models response:', { status: response.status, statusText: response.statusText });
+
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('[API] Get models failed:', { status: response.status, error: errorText });
         throw new Error(`Get models failed: ${response.status} ${response.statusText}`);
       }
 
-      return await response.json();
+      const data = await response.json();
+      console.log('[API] Available models:', data);
+      return data;
     } catch (error) {
       console.error('Get models error:', error);
       throw error;
