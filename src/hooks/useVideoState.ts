@@ -13,7 +13,6 @@ export interface VideoState {
 export interface SummarizationSettings {
   chunkDuration: number;
   prompt: string;
-  systemPrompt: string;
   captionSummarizationPrompt: string;
   summaryAggregationPrompt: string;
   enableChat: boolean;
@@ -25,7 +24,6 @@ export interface SummarizationSettings {
 export const DEFAULT_SUMMARIZATION_SETTINGS: SummarizationSettings = {
   chunkDuration: 10,
   prompt: 'You are a warehouse monitoring system. Analyze the video and describe all events, activities, and any anomalies you detect. Focus on movement patterns, object interactions, and unusual behaviors.',
-  systemPrompt: 'You are an AI video analysis assistant specialized in surveillance and monitoring. Provide clear, actionable insights.',
   captionSummarizationPrompt: '',
   summaryAggregationPrompt: '',
   enableChat: true,

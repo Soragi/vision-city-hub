@@ -124,19 +124,6 @@ const SummarizationSettings = ({
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="system-prompt" className="text-xs">
-                System Prompt
-              </Label>
-              <Textarea
-                id="system-prompt"
-                value={settings.systemPrompt}
-                onChange={(e) => updateSetting('systemPrompt', e.target.value)}
-                placeholder="System-level instructions for the AI..."
-                className="min-h-[60px] text-xs resize-none"
-              />
-            </div>
-
-            <div className="space-y-2">
               <Label htmlFor="caption-prompt" className="text-xs">
                 Caption Summarization Prompt (Optional)
               </Label>
