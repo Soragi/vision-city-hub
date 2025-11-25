@@ -36,12 +36,12 @@ export interface SummarizeParams {
   model?: string;
   chunk_duration?: number;
   prompt?: string;
-  system_prompt?: string;
   caption_summarization_prompt?: string;
   summary_aggregation_prompt?: string;
   enable_chat?: boolean;
   enable_chat_history?: boolean;
   enable_audio?: boolean;
+  stream?: boolean;
 }
 
 export interface Alert {
@@ -70,7 +70,7 @@ export const chatAPI = {
         body: JSON.stringify({
           messages,
           stream: false,
-          file_id: fileId,
+          id: fileId,
         }),
       });
 
@@ -91,6 +91,8 @@ export const fileAPI = {
   async uploadFile(file: File, onProgress?: (progress: number) => void): Promise<FileInfo> {
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('purpose', 'vision');
+    formData.append('media_type', 'video');
 
     try {
       const xhr = new XMLHttpRequest();
@@ -161,12 +163,25 @@ export const summarizationAPI = {
     onProgress?: (chunk: string) => void
   ): Promise<string> {
     try {
+      const requestBody = {
+        id: params.id,
+        chunk_duration: params.chunk_duration,
+        prompt: params.prompt,
+        caption_summarization_prompt: params.caption_summarization_prompt || '',
+        summary_aggregation_prompt: params.summary_aggregation_prompt || '',
+        enable_chat: params.enable_chat ?? true,
+        enable_chat_history: params.enable_chat_history ?? true,
+        enable_audio: params.enable_audio ?? false,
+        model: params.model,
+        stream: true,
+      };
+
       const response = await fetch(`${API_BASE_URL}/summarize`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(params),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {

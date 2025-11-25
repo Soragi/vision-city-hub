@@ -121,7 +121,6 @@ const Index = () => {
           model: summarizationSettings.model,
           chunk_duration: summarizationSettings.chunkDuration,
           prompt: summarizationSettings.prompt,
-          system_prompt: summarizationSettings.systemPrompt,
           caption_summarization_prompt: summarizationSettings.captionSummarizationPrompt || undefined,
           summary_aggregation_prompt: summarizationSettings.summaryAggregationPrompt || undefined,
           enable_chat: summarizationSettings.enableChat,
