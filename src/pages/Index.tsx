@@ -307,6 +307,7 @@ const Index = () => {
             <div className="flex-1">
               <ChatInterface
                 fileId={selectedVideo?.fileId}
+                summary={selectedVideo?.summary}
                 onResetChat={() => {
                   if (selectedStreamId) {
                     updateVideo(selectedStreamId, { summary: null });

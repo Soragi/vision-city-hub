@@ -8,9 +8,12 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    allowedHosts: [
+      '3000-m9l9k2srp.brevlab.com'
+    ],
     proxy: {
       '/api': {
-        target: 'http://localhost:8001',
+        target: process.env.VITE_BACKEND_URL || 'http://via-server:9100',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

@@ -15,10 +15,11 @@ interface Message {
 
 interface ChatInterfaceProps {
   fileId?: string | null;
+  summary?: string | null;
   onResetChat?: () => void;
 }
 
-const ChatInterface = ({ fileId, onResetChat }: ChatInterfaceProps) => {
+const ChatInterface = ({ fileId, summary, onResetChat }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -49,15 +50,27 @@ const ChatInterface = ({ fileId, onResetChat }: ChatInterfaceProps) => {
 
     try {
       // Convert messages to API format
-      const apiMessages: APIChatMessage[] = messages.map(msg => ({
-        role: msg.role,
-        content: msg.content,
-      }));
+      const apiMessages: APIChatMessage[] = [];
       
-      // Add current user message
+      // Add previous messages
+      messages.forEach(msg => {
+        apiMessages.push({
+          role: msg.role,
+          content: msg.content,
+        });
+      });
+      
+      // Build the user message - include summary context directly in the message
+      // because the backend only uses the last message's content and ignores system messages
+      let userContent = input;
+      if (summary) {
+        userContent = `Based on this video summary:\n\n${summary}\n\nUser question: ${input}`;
+      }
+      
+      // Add current user message with embedded context
       apiMessages.push({
         role: "user",
-        content: input,
+        content: userContent,
       });
 
       // Call NVIDIA VSS backend with file context if available

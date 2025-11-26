@@ -60,7 +60,7 @@ export interface Model {
 }
 
 export const chatAPI = {
-  async sendMessage(messages: ChatMessage[], fileId?: string): Promise<string> {
+  async sendMessage(messages: ChatMessage[], fileId?: string, model: string = 'cosmos-reason1'): Promise<string> {
     try {
       const response = await fetch(`${API_BASE_URL}/chat/completions`, {
         method: 'POST',
@@ -69,6 +69,7 @@ export const chatAPI = {
         },
         body: JSON.stringify({
           messages,
+          model,
           stream: false,
           id: fileId,
         }),
@@ -239,7 +240,8 @@ export const summarizationAPI = {
               
               try {
                 const parsed = JSON.parse(data);
-                const content = parsed.content || parsed.chunk || '';
+                // Backend returns content in choices[0].message.content (OpenAI-style format)
+                const content = parsed.choices?.[0]?.message?.content || parsed.content || parsed.chunk || '';
                 summary += content;
                 if (onProgress) {
                   onProgress(content);

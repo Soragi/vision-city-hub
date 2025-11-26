@@ -4,20 +4,20 @@ networks:
 
 services:
   # Frontend - Production build
-  frontend:
-    build:
-      context: ./vision-city-hub
-      dockerfile: Dockerfile
-    ports:
-      - "3000:80"
-    environment:
-      - NODE_ENV=production
-    restart: unless-stopped
-    container_name: municipal-video-ai-frontend
-    networks:
-      - municipal-ai-network
-    depends_on:
-      - via-server
+  # frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:80"
+  #   environment:
+  #     - NODE_ENV=production
+  #   restart: unless-stopped
+  #   container_name: municipal-video-ai-frontend
+  #   networks:
+  #     - municipal-ai-network
+  #   depends_on:
+  #     - via-server
 
   # Frontend - Development with hot reload
   frontend-dev:
@@ -29,7 +29,7 @@ services:
       - NODE_ENV=development
       - VITE_BACKEND_URL=http://via-server:${BACKEND_PORT:-8001}
     volumes:
-      - ./vision-city-hub:/app
+      - .:/app
       - /app/node_modules
     command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
     container_name: municipal-video-ai-frontend-dev
