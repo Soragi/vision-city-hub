@@ -189,18 +189,24 @@ export const summarizationAPI = {
     onProgress?: (chunk: string) => void
   ): Promise<string> {
     try {
-      const requestBody = {
+      const requestBody: Record<string, unknown> = {
         id: params.id,
         model: params.model || 'cosmos-reason1',
         chunk_duration: params.chunk_duration,
         prompt: params.prompt,
-        caption_summarization_prompt: params.caption_summarization_prompt || '',
-        summary_aggregation_prompt: params.summary_aggregation_prompt || '',
         enable_chat: params.enable_chat ?? true,
         enable_chat_history: params.enable_chat_history ?? true,
         enable_audio: params.enable_audio ?? false,
         stream: true,
       };
+
+      // Only include optional prompts if they have actual content
+      if (params.caption_summarization_prompt?.trim()) {
+        requestBody.caption_summarization_prompt = params.caption_summarization_prompt.trim();
+      }
+      if (params.summary_aggregation_prompt?.trim()) {
+        requestBody.summary_aggregation_prompt = params.summary_aggregation_prompt.trim();
+      }
 
       console.log('[API] Starting summarization:', requestBody);
 
