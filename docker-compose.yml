@@ -4,20 +4,20 @@ networks:
 
 services:
   # Frontend - Production build
-  # frontend:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:80"
-  #   environment:
-  #     - NODE_ENV=production
-  #   restart: unless-stopped
-  #   container_name: municipal-video-ai-frontend
-  #   networks:
-  #     - municipal-ai-network
-  #   depends_on:
-  #     - via-server
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    container_name: municipal-video-ai-frontend
+    networks:
+      - municipal-ai-network
+    depends_on:
+      - via-server
 
   # Frontend - Development with hot reload
   frontend-dev:
