@@ -259,7 +259,7 @@ const Index = () => {
               </div>
 
               <div className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((streamId) => {
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((streamId) => {
                   const video = videos.get(streamId);
                   return (
                     <div key={streamId} className="relative">
