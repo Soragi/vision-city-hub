@@ -23,7 +23,7 @@ export interface SummarizationSettings {
 
 export const DEFAULT_SUMMARIZATION_SETTINGS: SummarizationSettings = {
   chunkDuration: 10,
-  prompt: 'You are a warehouse monitoring system. Analyze the video and describe all events, activities, and any anomalies you detect. Focus on movement patterns, object interactions, and unusual behaviors.',
+  prompt: 'You are an automotive production line quality inspector. Analyze the car engine manufacturing video and detect any assembly defects, component misalignments, missing parts, or quality issues. Focus on engine block assembly, cylinder head installation, crankshaft positioning, piston placement, valve train components, and timing chain/belt alignment. Flag any deviations from standard manufacturing procedures.',
   captionSummarizationPrompt: '',
   summaryAggregationPrompt: '',
   enableChat: true,

@@ -62,7 +62,7 @@ const ResponsePanel = ({
       <div className="p-4 border-b border-border">
         <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-primary" />
-          Analysis Results
+          Quality Inspection Results
         </h2>
       </div>
 
@@ -99,7 +99,7 @@ const ResponsePanel = ({
                   <Collapsible open={showFullSummary} onOpenChange={setShowFullSummary}>
                     <div className="space-y-2">
                       <div className="flex items-start justify-between">
-                        <h4 className="text-xs font-semibold text-foreground">Video Summary</h4>
+                        <h4 className="text-xs font-semibold text-foreground">Production Analysis</h4>
                         <CollapsibleTrigger asChild>
                           <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
                             {showFullSummary ? (
@@ -133,7 +133,7 @@ const ResponsePanel = ({
                     className="w-full justify-start text-xs h-8"
                   >
                     <Sparkles className="w-3 h-3 mr-2" />
-                    Generate Scenario Highlight
+                    Generate Defect Report
                   </Button>
                   
                   {onResetChat && (
@@ -151,10 +151,10 @@ const ResponsePanel = ({
 
                 {/* Video Event Summary */}
                 <Card className="p-3 bg-secondary border-border">
-                  <h4 className="text-xs font-semibold text-foreground mb-2">Video Events</h4>
+                  <h4 className="text-xs font-semibold text-foreground mb-2">Production Events</h4>
                   <div className="space-y-2">
                     <div className="text-[10px] text-muted-foreground">
-                      Detailed event timeline and analysis will appear here after processing
+                      Detailed event timeline and defect analysis will appear here after processing
                     </div>
                   </div>
                 </Card>
@@ -163,7 +163,7 @@ const ResponsePanel = ({
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <MessageSquare className="w-12 h-12 text-muted-foreground mb-3" />
                 <p className="text-xs text-muted-foreground max-w-[200px]">
-                  Upload a video and click "Summarize" to see analysis results
+                  Upload production footage and click "Analyze" to see quality inspection results
                 </p>
               </div>
             )}
@@ -196,7 +196,7 @@ const ResponsePanel = ({
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <AlertTriangle className="w-12 h-12 text-muted-foreground mb-3" />
                 <p className="text-xs text-muted-foreground max-w-[200px]">
-                  No alerts detected. Alerts will appear here when anomalies are found
+                  No defects detected. Alerts will appear here when quality issues are found
                 </p>
               </div>
             )}
