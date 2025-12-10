@@ -46,8 +46,8 @@ const Index = () => {
       });
 
       toast({
-        title: "✓ Video Uploaded Successfully",
-        description: `Stream ${streamId}: ${file.name} is ready for analysis`,
+        title: "✓ Footage Uploaded Successfully",
+        description: `Camera ${streamId}: ${file.name} is ready for inspection`,
       });
 
       // Auto-select the uploaded video
@@ -79,8 +79,8 @@ const Index = () => {
         setSelectedStreamId(null);
       }
       toast({
-        title: "Video Deleted",
-        description: `Stream ${streamId} video removed`,
+        title: "Footage Deleted",
+        description: `Camera ${streamId} footage removed`,
       });
     } catch (error) {
       console.error('Delete failed:', error);
@@ -146,8 +146,8 @@ const Index = () => {
       });
 
       toast({
-        title: "Summarization Complete",
-        description: "Video analysis finished successfully",
+        title: "Analysis Complete",
+        description: "Production line inspection finished successfully",
       });
     } catch (error) {
       console.error('Summarization failed:', error);
@@ -215,13 +215,13 @@ const Index = () => {
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-primary-foreground">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                <path d="M12 15c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2s2 .9 2 2v8c0 1.1-.9 2-2 2zm4-2V5c0-2.21-1.79-4-4-4S8 2.79 8 5v8c0 2.21 1.79 4 4 4s4-1.79 4-4zM6 13c0 3.31 2.69 6 6 6s6-2.69 6-6h2c0 4.08-3.05 7.44-7 7.93V23h-2v-2.07C7.05 20.44 4 17.08 4 13h2z"/>
               </svg>
             </div>
-            <h1 className="text-xl font-bold text-foreground">Municipal Video Surveillance</h1>
+            <h1 className="text-xl font-bold text-foreground">Engine Production Line</h1>
           </div>
           <div className="h-6 w-px bg-border mx-2" />
-          <span className="text-sm text-muted-foreground">AI Video Analysis Agent</span>
+          <span className="text-sm text-muted-foreground">AI Quality & Defect Analysis</span>
         </div>
         <div className="flex items-center gap-2">
           {selectedForComparison.length > 0 && (
@@ -251,9 +251,9 @@ const Index = () => {
             <div className="h-full">
               <div className="mb-3 flex items-center justify-between">
                 <div>
-                  <h2 className="text-base font-semibold text-foreground mb-0.5">Video Streams</h2>
+                  <h2 className="text-base font-semibold text-foreground mb-0.5">Production Line Cameras</h2>
                   <p className="text-xs text-muted-foreground">
-                    Upload to Stream 1 (Primary) first. Other streams are optional for comparison.
+                    Upload to Camera 1 (Primary) first. Other cameras monitor different production stages.
                   </p>
                 </div>
               </div>
@@ -331,8 +331,8 @@ const Index = () => {
             }}
             onGenerateHighlight={() => {
               toast({
-                title: "Generate Highlight",
-                description: "Highlight generation feature coming soon",
+                title: "Generate Defect Report",
+                description: "Defect report generation feature coming soon",
               });
             }}
           />

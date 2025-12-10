@@ -162,7 +162,7 @@ const VideoUploadCard = ({
         <div className="flex items-center gap-1.5">
           <Video className={cn("w-3.5 h-3.5", isPrimary ? "text-primary" : "text-primary")} />
           <span className={cn("text-xs font-semibold", isPrimary ? "text-primary" : "text-foreground")}>
-            Stream {streamId} {isPrimary && "(Primary)"}
+            Camera {streamId} {isPrimary && "(Primary)"}
           </span>
           {getStatusBadge()}
         </div>
