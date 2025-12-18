@@ -1,73 +1,89 @@
-# Welcome to your Lovable project
+# Engine Production Line AI
 
-## Project info
+AI-powered quality inspection and defect analysis for automotive engine production lines, built on NVIDIA Video Search & Summarization (VSS) Blueprint.
 
-**URL**: https://lovable.dev/projects/25e709ab-7702-4cc2-a6d7-23de31cae875
+## Overview
 
-## How can I edit this code?
+This application provides real-time video analysis of car engine production lines using NVIDIA's Cosmos-Reason1 Vision Language Model. It detects:
 
-There are several ways of editing your application.
+- **Assembly Defects** - Engine block, cylinder head, component installation issues
+- **Equipment Malfunctions** - Robotic arm failures, conveyor issues
+- **Quality Control Failures** - Torque violations, measurement errors
+- **Safety Violations** - PPE compliance, unsafe practices
+- **Process Deviations** - Sequence errors, timing issues
 
-**Use Lovable**
+## Architecture
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/25e709ab-7702-4cc2-a6d7-23de31cae875) and start prompting.
+```
+├── src/                    # React frontend application
+├── nvidia-vss/             # NVIDIA VSS deployment configuration
+│   ├── compose.yaml        # Docker Compose for all services
+│   ├── config.yaml         # VLM and RAG configuration
+│   ├── .env                # Environment variables
+│   └── guardrails/         # NeMo Guardrails config
+├── Dockerfile              # Frontend container build
+└── docker-compose.yml      # Legacy/alternative compose
+```
 
-Changes made via Lovable will be committed automatically to this repo.
+## Quick Start
 
-**Use your preferred IDE**
+### Development (Frontend Only)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Production Deployment (Full Stack with NVIDIA VSS)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+cd nvidia-vss
 
-**Use GitHub Codespaces**
+# Configure your NGC API key
+nano .env
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Source environment
+source .env
 
-## What technologies are used for this project?
+# Start all services
+docker compose up -d
+```
 
-This project is built with:
+**Access Points:**
+- Frontend: http://localhost:3000
+- VSS API: http://localhost:8100
+- Neo4j: http://localhost:7474
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Hardware Requirements
 
-## How can I deploy this project?
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| GPU | 1x A100 80GB | 1x H100 |
+| RAM | 32GB | 64GB |
+| Storage | 100GB SSD | 500GB NVMe |
 
-Simply open [Lovable](https://lovable.dev/projects/25e709ab-7702-4cc2-a6d7-23de31cae875) and click on Share -> Publish.
+## Technologies
 
-## Can I connect a custom domain to my Lovable project?
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS, shadcn/ui
+- **Backend**: NVIDIA VSS Engine 2.4.0
+- **VLM**: Cosmos-Reason1-7B
+- **Databases**: Neo4j (Graph), Milvus (Vector), Elasticsearch
+- **Storage**: MinIO
 
-Yes, you can!
+## Configuration
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Edit `nvidia-vss/config.yaml` to customize:
+- Summarization prompts for your production line
+- Alert thresholds and notification events
+- LLM parameters (temperature, tokens, etc.)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Documentation
+
+- [NVIDIA VSS Documentation](https://docs.nvidia.com/vss/latest/index.html)
+- [Deployment Guide](nvidia-vss/README.md)
+- [DEPLOYMENT.md](DEPLOYMENT.md)
+
+## License
+
+Frontend: MIT License  
+NVIDIA VSS: Apache 2.0 License
