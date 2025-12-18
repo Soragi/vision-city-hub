@@ -8,45 +8,50 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* NVIDIA-inspired dark theme */
-    --background: 220 15% 8%;
-    --foreground: 0 0% 95%;
+    /* Parcel.AI - Deep navy security theme */
+    --background: 225 30% 6%;
+    --foreground: 210 20% 96%;
 
-    --card: 220 15% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 225 25% 10%;
+    --card-foreground: 210 20% 96%;
 
-    --popover: 220 15% 10%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 225 25% 8%;
+    --popover-foreground: 210 20% 96%;
 
-    /* NVIDIA green accent */
-    --primary: 84 100% 45%;
-    --primary-foreground: 220 15% 8%;
+    /* Electric blue accent for security/surveillance */
+    --primary: 200 100% 50%;
+    --primary-foreground: 225 30% 6%;
 
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 225 20% 16%;
+    --secondary-foreground: 210 20% 96%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 225 20% 14%;
+    --muted-foreground: 210 15% 55%;
 
-    --accent: 84 100% 45%;
-    --accent-foreground: 220 15% 8%;
+    --accent: 200 100% 50%;
+    --accent-foreground: 225 30% 6%;
 
-    --destructive: 0 70% 50%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 84 100% 45%;
+    --border: 225 20% 18%;
+    --input: 225 20% 18%;
+    --ring: 200 100% 50%;
 
-    --radius: 0.375rem;
+    --radius: 0.5rem;
 
     /* Video grid specific */
-    --video-bg: 220 15% 10%;
-    --video-border: 220 15% 25%;
+    --video-bg: 225 25% 8%;
+    --video-border: 225 20% 22%;
     
     /* Chat interface */
-    --chat-bg: 220 15% 11%;
-    --chat-input: 220 15% 15%;
+    --chat-bg: 225 25% 9%;
+    --chat-input: 225 20% 14%;
+    
+    /* Status colors */
+    --status-secure: 160 84% 39%;
+    --status-warning: 38 92% 50%;
+    --status-alert: 0 72% 51%;
   }
 }
 

@@ -46,8 +46,8 @@ const Index = () => {
       });
 
       toast({
-        title: "✓ Footage Uploaded Successfully",
-        description: `Camera ${streamId}: ${file.name} is ready for inspection`,
+        title: "✓ Footage Uploaded",
+        description: `Unit ${streamId}: ${file.name} ready for security analysis`,
       });
 
       // Auto-select the uploaded video
@@ -79,8 +79,8 @@ const Index = () => {
         setSelectedStreamId(null);
       }
       toast({
-        title: "Footage Deleted",
-        description: `Camera ${streamId} footage removed`,
+        title: "Footage Removed",
+        description: `Unit ${streamId} footage cleared`,
       });
     } catch (error) {
       console.error('Delete failed:', error);
@@ -146,8 +146,8 @@ const Index = () => {
       });
 
       toast({
-        title: "Analysis Complete",
-        description: "Production line inspection finished successfully",
+        title: "Security Analysis Complete",
+        description: "Surveillance scan completed successfully",
       });
     } catch (error) {
       console.error('Summarization failed:', error);
@@ -210,20 +210,27 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="bg-card border-b border-border px-8 py-4">
+      <header className="bg-card border-b border-border px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
+            <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-primary-foreground">
-                <path d="M12 15c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2s2 .9 2 2v8c0 1.1-.9 2-2 2zm4-2V5c0-2.21-1.79-4-4-4S8 2.79 8 5v8c0 2.21 1.79 4 4 4s4-1.79 4-4zM6 13c0 3.31 2.69 6 6 6s6-2.69 6-6h2c0 4.08-3.05 7.44-7 7.93V23h-2v-2.07C7.05 20.44 4 17.08 4 13h2z"/>
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
               </svg>
             </div>
-            <h1 className="text-xl font-bold text-foreground">Engine Production Line</h1>
+            <div>
+              <h1 className="text-xl font-bold text-foreground tracking-tight">Parcel.AI</h1>
+              <span className="text-xs text-primary font-medium">Vision Protection</span>
+            </div>
           </div>
-          <div className="h-6 w-px bg-border mx-2" />
-          <span className="text-sm text-muted-foreground">AI Quality & Defect Analysis</span>
+          <div className="h-8 w-px bg-border mx-3" />
+          <span className="text-sm text-muted-foreground">Storage Unit Security Monitoring</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-[hsl(var(--status-secure))]/10 border border-[hsl(var(--status-secure))]/30 rounded-full">
+            <div className="w-2 h-2 rounded-full bg-[hsl(var(--status-secure))] animate-pulse" />
+            <span className="text-xs font-medium text-[hsl(var(--status-secure))]">System Active</span>
+          </div>
           {selectedForComparison.length > 0 && (
             <Button
               variant="default"
@@ -232,7 +239,7 @@ const Index = () => {
               disabled={selectedForComparison.length < 2}
             >
               <GitCompareArrows className="w-4 h-4 mr-2" />
-              Compare {selectedForComparison.length} Videos
+              Compare {selectedForComparison.length} Feeds
             </Button>
           )}
         </div>
@@ -251,9 +258,9 @@ const Index = () => {
             <div className="h-full">
               <div className="mb-3 flex items-center justify-between">
                 <div>
-                  <h2 className="text-base font-semibold text-foreground mb-0.5">Production Line Cameras</h2>
+                  <h2 className="text-base font-semibold text-foreground mb-0.5">Storage Unit Cameras</h2>
                   <p className="text-xs text-muted-foreground">
-                    Upload to Camera 1 (Primary) first. Other cameras monitor different production stages.
+                    Monitor entry points, hallways, and individual storage units with AI-powered surveillance.
                   </p>
                 </div>
               </div>
@@ -331,8 +338,8 @@ const Index = () => {
             }}
             onGenerateHighlight={() => {
               toast({
-                title: "Generate Defect Report",
-                description: "Defect report generation feature coming soon",
+                title: "Generate Security Report",
+                description: "Security incident report generation coming soon",
               });
             }}
           />
