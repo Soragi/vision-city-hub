@@ -4,9 +4,8 @@ import VideoUploadCard from "@/components/VideoUploadCard";
 import ChatInterface from "@/components/ChatInterface";
 import ResponsePanel from "@/components/ResponsePanel";
 import SummarizationSettings from "@/components/SummarizationSettings";
-import { BackendHealthCheck } from "@/components/BackendHealthCheck";
 import { Button } from "@/components/ui/button";
-import { GitCompareArrows } from "lucide-react";
+import { GitCompareArrows, Shield, Eye, Camera, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useVideoState } from "@/hooks/useVideoState";
 import { fileAPI, summarizationAPI } from "@/services/api";
@@ -24,6 +23,7 @@ const Index = () => {
     setSelectedStreamId,
   } = useVideoState();
   const [selectedForComparison, setSelectedForComparison] = useState<number[]>([]);
+  const [showDashboard, setShowDashboard] = useState(false);
 
   const handleVideoUpload = async (streamId: number, file: File) => {
     updateVideo(streamId, {
@@ -50,7 +50,6 @@ const Index = () => {
         description: `Unit ${streamId}: ${file.name} ready for security analysis`,
       });
 
-      // Auto-select the uploaded video
       setSelectedStreamId(streamId);
     } catch (error) {
       console.error('Upload failed:', error);
@@ -208,28 +207,135 @@ const Index = () => {
     });
   };
 
-  return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <header className="bg-card border-b border-border px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-primary-foreground">
-                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
-              </svg>
+  if (!showDashboard) {
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+          <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="font-display font-bold text-xl text-primary">Parcel AI</span>
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground tracking-tight">Parcel.AI</h1>
-              <span className="text-xs text-primary font-medium">Vision Protection</span>
+            <nav className="hidden md:flex items-center gap-8">
+              <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
+              <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
+              <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
+            </nav>
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" size="sm">Log In</Button>
+              <Button size="sm" className="shadow-button" onClick={() => setShowDashboard(true)}>
+                Open Dashboard
+              </Button>
             </div>
           </div>
-          <div className="h-8 w-px bg-border mx-3" />
-          <span className="text-sm text-muted-foreground">Storage Unit Security Monitoring</span>
+        </header>
+
+        {/* Hero Section */}
+        <section className="gradient-hero pt-32 pb-20 px-6">
+          <div className="container mx-auto max-w-5xl text-center">
+            <h1 className="font-display font-extrabold text-4xl md:text-6xl lg:text-7xl tracking-tight mb-6 animate-fade-in">
+              Never miss a security event{" "}
+              <span className="text-gradient">ever again.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              Parcel AI Vision Protection monitors your storage facility 24/7 with AI-powered surveillance—detecting intrusions, tracking packages, and alerting you instantly.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <Button size="lg" className="shadow-button px-8" onClick={() => setShowDashboard(true)}>
+                Open Dashboard
+                <ChevronRight className="ml-2 w-4 h-4" />
+              </Button>
+              <Button variant="outline" size="lg" className="px-8">
+                Watch Demo
+              </Button>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+              {["Built for Self-Storage", "<1s Alert Time", "24/7 Monitoring"].map((badge) => (
+                <span
+                  key={badge}
+                  className="px-4 py-2 bg-background border border-border rounded-full text-sm font-medium text-foreground"
+                >
+                  {badge}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section id="features" className="py-24 px-6">
+          <div className="container mx-auto max-w-6xl">
+            <div className="text-center mb-16">
+              <h2 className="font-display font-bold text-3xl md:text-4xl mb-4">Core Benefits</h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                AI-powered security designed specifically for storage facilities.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { icon: Shield, title: "24/7 Protection", desc: "Always watching—never miss a break-in or suspicious activity." },
+                { icon: Eye, title: "Smart Detection", desc: "AI distinguishes between customers and potential threats instantly." },
+                { icon: Camera, title: "Multi-Camera Sync", desc: "Correlate events across all your cameras in real-time." },
+              ].map((feature, i) => (
+                <div
+                  key={feature.title}
+                  className="p-8 rounded-2xl border border-border bg-card hover:shadow-soft transition-all duration-300 animate-fade-in"
+                  style={{ animationDelay: `${0.1 * i}s` }}
+                >
+                  <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center mb-5">
+                    <feature.icon className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <h3 className="font-display font-semibold text-xl mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-24 px-6 gradient-hero">
+          <div className="container mx-auto max-w-3xl text-center">
+            <h2 className="font-display font-bold text-3xl md:text-4xl mb-4">
+              Ready to secure your facility?
+            </h2>
+            <p className="text-muted-foreground mb-8">
+              Start monitoring your storage units with AI-powered vision protection today.
+            </p>
+            <Button size="lg" className="shadow-button px-10" onClick={() => setShowDashboard(true)}>
+              Get Started Free
+              <ChevronRight className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="py-12 px-6 border-t border-border">
+          <div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-6">
+            <span className="font-display font-bold text-lg text-primary">Parcel AI</span>
+            <p className="text-sm text-muted-foreground">© 2024 Parcel AI. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
+    );
+  }
+
+  // Dashboard View
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <header className="bg-card border-b border-border px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <button onClick={() => setShowDashboard(false)} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <span className="font-display font-bold text-xl text-primary">Parcel AI</span>
+            <span className="text-xs font-medium text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">Vision</span>
+          </button>
+          <div className="h-6 w-px bg-border mx-2" />
+          <span className="text-sm text-muted-foreground">Storage Security Dashboard</span>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-[hsl(var(--status-secure))]/10 border border-[hsl(var(--status-secure))]/30 rounded-full">
-            <div className="w-2 h-2 rounded-full bg-[hsl(var(--status-secure))] animate-pulse" />
-            <span className="text-xs font-medium text-[hsl(var(--status-secure))]">System Active</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-full">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-xs font-medium text-green-600">System Active</span>
           </div>
           {selectedForComparison.length > 0 && (
             <Button
@@ -237,6 +343,7 @@ const Index = () => {
               size="sm"
               onClick={handleCompareSelected}
               disabled={selectedForComparison.length < 2}
+              className="shadow-button"
             >
               <GitCompareArrows className="w-4 h-4 mr-2" />
               Compare {selectedForComparison.length} Feeds
@@ -248,24 +355,19 @@ const Index = () => {
       <main className="flex-1 flex overflow-hidden">
         {/* Left Side - Video Grid and Settings */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Backend Health Check */}
-          <div className="px-4 pt-4">
-            <BackendHealthCheck />
-          </div>
-          
           {/* Video Grid */}
-          <div className="flex-1 overflow-auto p-4 pt-0">{/* ... keep existing code */}
+          <div className="flex-1 overflow-auto p-5">
             <div className="h-full">
-              <div className="mb-3 flex items-center justify-between">
+              <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <h2 className="text-base font-semibold text-foreground mb-0.5">Storage Unit Cameras</h2>
-                  <p className="text-xs text-muted-foreground">
-                    Monitor entry points, hallways, and individual storage units with AI-powered surveillance.
+                  <h2 className="font-display font-semibold text-lg text-foreground mb-1">Storage Unit Cameras</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Monitor entry points, hallways, and individual units with AI-powered surveillance.
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((streamId) => {
                   const video = videos.get(streamId);
                   return (
@@ -275,7 +377,7 @@ const Index = () => {
                           type="checkbox"
                           checked={selectedForComparison.includes(streamId)}
                           onChange={() => toggleComparisonSelection(streamId)}
-                          className="absolute top-2 right-2 z-10 w-4 h-4 cursor-pointer"
+                          className="absolute top-3 right-3 z-10 w-4 h-4 cursor-pointer accent-primary"
                         />
                       )}
                       <VideoUploadCard
@@ -326,7 +428,7 @@ const Index = () => {
         </div>
 
         {/* Right Side - Response Panel */}
-        <div className="w-[360px] hidden xl:block">
+        <div className="w-[360px] hidden xl:block border-l border-border">
           <ResponsePanel
             summary={selectedVideo?.summary || null}
             fileId={selectedVideo?.fileId || null}
