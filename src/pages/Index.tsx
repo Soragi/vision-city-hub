@@ -218,10 +218,10 @@ const Index = () => {
                 <path d="M12 15c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2s2 .9 2 2v8c0 1.1-.9 2-2 2zm4-2V5c0-2.21-1.79-4-4-4S8 2.79 8 5v8c0 2.21 1.79 4 4 4s4-1.79 4-4zM6 13c0 3.31 2.69 6 6 6s6-2.69 6-6h2c0 4.08-3.05 7.44-7 7.93V23h-2v-2.07C7.05 20.44 4 17.08 4 13h2z"/>
               </svg>
             </div>
-            <h1 className="text-xl font-bold text-foreground">Engine Production Line</h1>
+            <h1 className="text-xl font-bold text-foreground">Dell Norway Vision Agent</h1>
           </div>
           <div className="h-6 w-px bg-border mx-2" />
-          <span className="text-sm text-muted-foreground">AI Quality & Defect Analysis</span>
+          <span className="text-sm text-muted-foreground">AI-Powered Visual Analysis</span>
         </div>
         <div className="flex items-center gap-2">
           {selectedForComparison.length > 0 && (
