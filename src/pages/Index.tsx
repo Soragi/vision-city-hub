@@ -4,6 +4,7 @@ import VideoUploadCard from "@/components/VideoUploadCard";
 import ChatInterface from "@/components/ChatInterface";
 import ResponsePanel from "@/components/ResponsePanel";
 import SummarizationSettings from "@/components/SummarizationSettings";
+import { BackendHealthCheck } from "@/components/BackendHealthCheck";
 import { Button } from "@/components/ui/button";
 import { GitCompareArrows } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -45,10 +46,11 @@ const Index = () => {
       });
 
       toast({
-        title: "✓ Footage Uploaded",
-        description: `Unit ${streamId}: ${file.name} ready for security analysis`,
+        title: "✓ Footage Uploaded Successfully",
+        description: `Camera ${streamId}: ${file.name} is ready for inspection`,
       });
 
+      // Auto-select the uploaded video
       setSelectedStreamId(streamId);
     } catch (error) {
       console.error('Upload failed:', error);
@@ -77,8 +79,8 @@ const Index = () => {
         setSelectedStreamId(null);
       }
       toast({
-        title: "Footage Removed",
-        description: `Unit ${streamId} footage cleared`,
+        title: "Footage Deleted",
+        description: `Camera ${streamId} footage removed`,
       });
     } catch (error) {
       console.error('Delete failed:', error);
@@ -144,8 +146,8 @@ const Index = () => {
       });
 
       toast({
-        title: "Security Analysis Complete",
-        description: "Surveillance scan completed successfully",
+        title: "Analysis Complete",
+        description: "Production line inspection finished successfully",
       });
     } catch (error) {
       console.error('Summarization failed:', error);
@@ -208,30 +210,29 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="bg-card border-b border-border px-6 py-3 flex items-center justify-between">
+      <header className="bg-card border-b border-border px-8 py-4">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <span className="font-display font-bold text-xl text-primary">Parcel AI</span>
-            <span className="text-xs font-medium text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">Vision</span>
+            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-primary-foreground">
+                <path d="M12 15c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2s2 .9 2 2v8c0 1.1-.9 2-2 2zm4-2V5c0-2.21-1.79-4-4-4S8 2.79 8 5v8c0 2.21 1.79 4 4 4s4-1.79 4-4zM6 13c0 3.31 2.69 6 6 6s6-2.69 6-6h2c0 4.08-3.05 7.44-7 7.93V23h-2v-2.07C7.05 20.44 4 17.08 4 13h2z"/>
+              </svg>
+            </div>
+            <h1 className="text-xl font-bold text-foreground">Engine Production Line</h1>
           </div>
           <div className="h-6 w-px bg-border mx-2" />
-          <span className="text-sm text-muted-foreground">Storage Security Dashboard</span>
+          <span className="text-sm text-muted-foreground">AI Quality & Defect Analysis</span>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-full">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-xs font-medium text-green-600">System Active</span>
-          </div>
+        <div className="flex items-center gap-2">
           {selectedForComparison.length > 0 && (
             <Button
               variant="default"
               size="sm"
               onClick={handleCompareSelected}
               disabled={selectedForComparison.length < 2}
-              className="shadow-button"
             >
               <GitCompareArrows className="w-4 h-4 mr-2" />
-              Compare {selectedForComparison.length} Feeds
+              Compare {selectedForComparison.length} Videos
             </Button>
           )}
         </div>
@@ -240,19 +241,24 @@ const Index = () => {
       <main className="flex-1 flex overflow-hidden">
         {/* Left Side - Video Grid and Settings */}
         <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Backend Health Check */}
+          <div className="px-4 pt-4">
+            <BackendHealthCheck />
+          </div>
+          
           {/* Video Grid */}
-          <div className="flex-1 overflow-auto p-5">
+          <div className="flex-1 overflow-auto p-4 pt-0">{/* ... keep existing code */}
             <div className="h-full">
-              <div className="mb-4 flex items-center justify-between">
+              <div className="mb-3 flex items-center justify-between">
                 <div>
-                  <h2 className="font-display font-semibold text-lg text-foreground mb-1">Storage Unit Cameras</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Monitor entry points, hallways, and individual units with AI-powered surveillance.
+                  <h2 className="text-base font-semibold text-foreground mb-0.5">Production Line Cameras</h2>
+                  <p className="text-xs text-muted-foreground">
+                    Upload to Camera 1 (Primary) first. Other cameras monitor different production stages.
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((streamId) => {
                   const video = videos.get(streamId);
                   return (
@@ -262,7 +268,7 @@ const Index = () => {
                           type="checkbox"
                           checked={selectedForComparison.includes(streamId)}
                           onChange={() => toggleComparisonSelection(streamId)}
-                          className="absolute top-3 right-3 z-10 w-4 h-4 cursor-pointer accent-primary"
+                          className="absolute top-2 right-2 z-10 w-4 h-4 cursor-pointer"
                         />
                       )}
                       <VideoUploadCard
@@ -313,7 +319,7 @@ const Index = () => {
         </div>
 
         {/* Right Side - Response Panel */}
-        <div className="w-[360px] hidden xl:block border-l border-border">
+        <div className="w-[360px] hidden xl:block">
           <ResponsePanel
             summary={selectedVideo?.summary || null}
             fileId={selectedVideo?.fileId || null}
@@ -325,8 +331,8 @@ const Index = () => {
             }}
             onGenerateHighlight={() => {
               toast({
-                title: "Generate Security Report",
-                description: "Security incident report generation coming soon",
+                title: "Generate Defect Report",
+                description: "Defect report generation feature coming soon",
               });
             }}
           />
