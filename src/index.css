@@ -8,45 +8,51 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* NVIDIA-inspired dark theme */
-    --background: 220 15% 8%;
-    --foreground: 0 0% 95%;
+    /* Google-inspired light theme */
+    --background: 0 0% 98%;
+    --foreground: 220 10% 15%;
 
-    --card: 220 15% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 10% 15%;
 
-    --popover: 220 15% 10%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 10% 15%;
 
-    /* NVIDIA green accent */
-    --primary: 84 100% 45%;
-    --primary-foreground: 220 15% 8%;
+    /* Google Blue accent */
+    --primary: 217 89% 51%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 10% 15%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 84 100% 45%;
-    --accent-foreground: 220 15% 8%;
+    --accent: 217 89% 51%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 4 90% 58%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 84 100% 45%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 217 89% 51%;
 
-    --radius: 0.375rem;
+    --radius: 0.5rem;
+
+    /* Google colors */
+    --google-blue: 217 89% 51%;
+    --google-red: 4 90% 58%;
+    --google-yellow: 45 93% 58%;
+    --google-green: 142 76% 36%;
 
     /* Video grid specific */
-    --video-bg: 220 15% 10%;
-    --video-border: 220 15% 25%;
+    --video-bg: 220 14% 96%;
+    --video-border: 220 13% 88%;
     
     /* Chat interface */
-    --chat-bg: 220 15% 11%;
-    --chat-input: 220 15% 15%;
+    --chat-bg: 0 0% 100%;
+    --chat-input: 220 14% 96%;
   }
 }
 
