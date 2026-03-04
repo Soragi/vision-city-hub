@@ -8,51 +8,52 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Google-inspired light theme */
-    --background: 0 0% 98%;
-    --foreground: 220 10% 15%;
+    /* Udder AI - Fresh dairy-inspired light theme */
+    --background: 30 30% 97%;
+    --foreground: 30 10% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 10% 15%;
+    --card: 30 20% 100%;
+    --card-foreground: 30 10% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 10% 15%;
+    --popover: 30 20% 100%;
+    --popover-foreground: 30 10% 15%;
 
-    /* Google Blue accent */
-    --primary: 217 89% 51%;
+    /* Barn Red accent */
+    --primary: 4 70% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 10% 15%;
+    --secondary: 30 20% 95%;
+    --secondary-foreground: 30 10% 15%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 30 15% 94%;
+    --muted-foreground: 30 10% 45%;
 
-    --accent: 217 89% 51%;
+    --accent: 142 50% 38%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 4 90% 58%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 217 89% 51%;
+    --border: 30 15% 88%;
+    --input: 30 15% 88%;
+    --ring: 4 70% 45%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    /* Google colors */
-    --google-blue: 217 89% 51%;
-    --google-red: 4 90% 58%;
-    --google-yellow: 45 93% 58%;
-    --google-green: 142 76% 36%;
+    /* Udder AI brand colors */
+    --udder-barn-red: 4 70% 45%;
+    --udder-cream: 40 50% 95%;
+    --udder-grass: 142 50% 38%;
+    --udder-sky: 200 60% 55%;
+    --udder-brown: 25 40% 30%;
 
     /* Video grid specific */
-    --video-bg: 220 14% 96%;
-    --video-border: 220 13% 88%;
+    --video-bg: 30 20% 95%;
+    --video-border: 30 15% 85%;
     
     /* Chat interface */
-    --chat-bg: 0 0% 100%;
-    --chat-input: 220 14% 96%;
+    --chat-bg: 30 20% 100%;
+    --chat-input: 30 15% 94%;
   }
 }
 
