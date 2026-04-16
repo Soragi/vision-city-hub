@@ -6,7 +6,14 @@ import ResponsePanel from "@/components/ResponsePanel";
 import SummarizationSettings from "@/components/SummarizationSettings";
 import { BackendHealthCheck } from "@/components/BackendHealthCheck";
 import { Button } from "@/components/ui/button";
-import { GitCompareArrows } from "lucide-react";
+import { GitCompareArrows, HeartPulse, Truck, ShieldCheck, Factory } from "lucide-react";
+
+const STREAM_INDUSTRIES = {
+  1: { title: "Healthcare", icon: HeartPulse },
+  2: { title: "Transport & Logistics", icon: Truck },
+  3: { title: "Defence & Security", icon: ShieldCheck },
+  4: { title: "Industrial Goods & Services", icon: Factory },
+} as const;
 import { useToast } from "@/hooks/use-toast";
 import { useVideoState } from "@/hooks/useVideoState";
 import { fileAPI, summarizationAPI } from "@/services/api";
@@ -265,6 +272,7 @@ const Index = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[1, 2, 3, 4].map((streamId) => {
                   const video = videos.get(streamId);
+                  const industry = STREAM_INDUSTRIES[streamId as keyof typeof STREAM_INDUSTRIES];
                   return (
                     <div key={streamId} className="relative">
                       {video?.file && (
@@ -277,6 +285,8 @@ const Index = () => {
                       )}
                       <VideoUploadCard
                         streamId={streamId}
+                        title={industry.title}
+                        icon={industry.icon}
                         onVideoUpload={handleVideoUpload}
                         onVideoDelete={handleVideoDelete}
                         fileId={video?.fileId}

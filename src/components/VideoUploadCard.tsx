@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from "react";
-import { Upload, X, Video, Trash2 } from "lucide-react";
+import { useState, useRef, useEffect, ComponentType } from "react";
+import { Upload, X, Video, Trash2, LucideProps } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -8,6 +8,8 @@ import { Progress } from "@/components/ui/progress";
 
 interface VideoUploadCardProps {
   streamId: number;
+  title?: string;
+  icon?: ComponentType<LucideProps>;
   onVideoUpload: (streamId: number, file: File) => void;
   onVideoDelete?: (streamId: number) => void;
   fileId?: string | null;
@@ -21,6 +23,8 @@ interface VideoUploadCardProps {
 
 const VideoUploadCard = ({
   streamId,
+  title,
+  icon: IndustryIcon,
   onVideoUpload,
   onVideoDelete,
   fileId,
@@ -159,11 +163,20 @@ const VideoUploadCard = ({
         "px-3 py-1.5 border-b border-video-border flex items-center justify-between",
         isPrimary ? "bg-primary/10" : "bg-secondary"
       )}>
-        <div className="flex items-center gap-1.5">
-          <Video className={cn("w-3.5 h-3.5", isPrimary ? "text-primary" : "text-primary")} />
-          <span className={cn("text-xs font-semibold", isPrimary ? "text-primary" : "text-foreground")}>
-            Camera {streamId} {isPrimary && "(Primary)"}
-          </span>
+        <div className="flex items-center gap-2">
+          {IndustryIcon ? (
+            <IndustryIcon className="w-4 h-4 text-primary" strokeWidth={1.5} />
+          ) : (
+            <Video className="w-3.5 h-3.5 text-primary" />
+          )}
+          <div className="flex flex-col leading-tight">
+            <span className="font-serif text-sm text-foreground">
+              {title ?? `Camera ${streamId}`}
+            </span>
+            <span className="text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+              Camera {streamId}{isPrimary && " · Primary"}
+            </span>
+          </div>
           {getStatusBadge()}
         </div>
         {videoFile && fileId && (
