@@ -167,46 +167,52 @@ const Index = () => {
 
   const selectedVideo = selectedStreamId ? videos.get(selectedStreamId) : undefined;
 
-  const handleCompareSelected = () => {
-    const videosToCompare = selectedForComparison
-      .map((streamId) => {
-        const video = videos.get(streamId);
-        if (!video?.file) return null;
-        return {
-          streamId,
-          file: video.file,
-          fileId: video.fileId,
-        };
-      })
-      .filter(Boolean);
-
-    if (videosToCompare.length < 2) {
+  const handleDownloadReport = () => {
+    if (!selectedVideo?.summary) {
       toast({
-        title: "Not Enough Videos",
-        description: "Please select at least 2 videos to compare",
+        title: "No Report Available",
+        description: "Run analysis on a video first to generate a report",
         variant: "destructive",
       });
       return;
     }
 
-    navigate('/comparison', { state: { videos: videosToCompare } });
-  };
+    const industry = selectedStreamId
+      ? STREAM_INDUSTRIES[selectedStreamId as keyof typeof STREAM_INDUSTRIES]
+      : undefined;
+    const fileName = selectedVideo.file?.name ?? `camera-${selectedStreamId}`;
+    const timestamp = new Date().toISOString();
 
-  const toggleComparisonSelection = (streamId: number) => {
-    setSelectedForComparison((prev) => {
-      if (prev.includes(streamId)) {
-        return prev.filter((id) => id !== streamId);
-      } else {
-        if (prev.length >= 4) {
-          toast({
-            title: "Maximum Reached",
-            description: "You can compare up to 4 videos at once",
-            variant: "destructive",
-          });
-          return prev;
-        }
-        return [...prev, streamId];
-      }
+    const markdown = `# Implement Consulting Group — Intelligence Report
+
+**Generated:** ${timestamp}
+**Industry:** ${industry?.title ?? "Unknown"}
+**Camera:** ${selectedStreamId ?? "—"}
+**Source footage:** ${fileName}
+
+---
+
+## Analysis
+
+${selectedVideo.summary}
+`;
+
+    const blob = new Blob([markdown], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const safeName = (industry?.title ?? `camera-${selectedStreamId}`)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-");
+    a.href = url;
+    a.download = `intelligence-report-${safeName}-${Date.now()}.md`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: "Report Downloaded",
+      description: "Intelligence report saved as Markdown",
     });
   };
 
