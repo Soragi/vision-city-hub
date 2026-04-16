@@ -325,12 +325,7 @@ ${selectedVideo.summary}
                 updateVideo(selectedStreamId, { summary: null });
               }
             }}
-            onGenerateHighlight={() => {
-              toast({
-                title: "Generate report",
-                description: "Report generation coming soon",
-              });
-            }}
+            onGenerateHighlight={handleDownloadReport}
           />
         </div>
       </main>
