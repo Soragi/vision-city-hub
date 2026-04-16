@@ -237,6 +237,7 @@ const Index = () => {
               Compare {selectedForComparison.length} Videos
             </Button>
           )}
+          </div>
         </div>
       </header>
 
