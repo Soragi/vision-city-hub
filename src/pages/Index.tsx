@@ -1,12 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import VideoUploadCard from "@/components/VideoUploadCard";
 import ChatInterface from "@/components/ChatInterface";
 import ResponsePanel from "@/components/ResponsePanel";
 import SummarizationSettings from "@/components/SummarizationSettings";
 import { BackendHealthCheck } from "@/components/BackendHealthCheck";
-import { Button } from "@/components/ui/button";
-import { GitCompareArrows, HeartPulse, Truck, ShieldCheck, Factory } from "lucide-react";
+import { HeartPulse, Truck, ShieldCheck, Factory } from "lucide-react";
 
 const STREAM_INDUSTRIES = {
   1: { title: "Healthcare", icon: HeartPulse },
