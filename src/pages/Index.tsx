@@ -210,17 +210,22 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="bg-card border-b border-border px-8 py-4">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            {/* Cow Logo */}
-            <span className="text-4xl" role="img" aria-label="cow">🐄</span>
-            <h1 className="text-xl font-bold text-foreground">Udder AI</h1>
+      <header className="bg-background border-b border-border px-10 py-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-baseline gap-4">
+            {/* Wordmark logo — Implement-style minimal */}
+            <div className="flex items-center gap-2.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+              <h1 className="font-serif text-2xl tracking-tight text-foreground">
+                Udder<span className="text-primary">.</span>
+              </h1>
+            </div>
+            <div className="h-5 w-px bg-border" />
+            <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              Vision Intelligence for Dairy Operations
+            </span>
           </div>
-          <div className="h-6 w-px bg-border mx-2" />
-          <span className="text-sm text-muted-foreground">Legendairy Intelligence for Your Herd 🥛</span>
-        </div>
-        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
           {selectedForComparison.length > 0 && (
             <Button
               variant="default"
@@ -246,17 +251,18 @@ const Index = () => {
           {/* Video Grid */}
           <div className="flex-1 overflow-auto p-4 pt-0">{/* ... keep existing code */}
             <div className="h-full">
-              <div className="mb-3 flex items-center justify-between">
+              <div className="mb-6 flex items-end justify-between border-b border-border pb-4">
                 <div>
-                  <h2 className="text-base font-semibold text-foreground mb-0.5">Barn Cameras</h2>
-                  <p className="text-xs text-muted-foreground">
-                    Upload to Camera 1 (Main Parlour) first. Other cameras monitor different milking stations.
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">01 — Live feeds</p>
+                  <h2 className="font-serif text-3xl text-foreground mb-1">Barn cameras</h2>
+                  <p className="text-sm text-muted-foreground max-w-xl">
+                    Upload to Camera 1 (Main Parlour) first. The remaining stations provide supplementary perspectives across the milking floor.
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((streamId) => {
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[1, 2, 3, 4].map((streamId) => {
                   const video = videos.get(streamId);
                   return (
                     <div key={streamId} className="relative">
