@@ -220,11 +220,11 @@ const Index = () => {
       <header className="bg-background border-b border-border px-10 py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
-            {/* IM Consulting Group wordmark */}
+            {/* IMPLEMENT Consulting Group wordmark */}
             <div className="flex flex-col leading-none">
-              <span className="font-serif text-2xl tracking-tight text-foreground">IM</span>
+              <span className="font-serif text-2xl tracking-tight text-foreground">IMPLEMENT</span>
               <span className="text-[9px] uppercase tracking-[0.22em] text-muted-foreground mt-1">
-                Consulting Group
+                Consulting Group_
               </span>
             </div>
             <div className="h-8 w-px bg-border" />
