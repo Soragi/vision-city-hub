@@ -133,7 +133,7 @@ const ResponsePanel = ({
                     className="w-full justify-start text-xs h-8"
                   >
                     <Sparkles className="w-3 h-3 mr-2" />
-                    Generate Defect Report
+                    Download Intelligence Report
                   </Button>
                   
                   {onResetChat && (
