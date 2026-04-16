@@ -265,14 +265,6 @@ ${selectedVideo.summary}
                   const industry = STREAM_INDUSTRIES[streamId as keyof typeof STREAM_INDUSTRIES];
                   return (
                     <div key={streamId} className="relative">
-                      {video?.file && (
-                        <input
-                          type="checkbox"
-                          checked={selectedForComparison.includes(streamId)}
-                          onChange={() => toggleComparisonSelection(streamId)}
-                          className="absolute top-2 right-2 z-10 w-4 h-4 cursor-pointer"
-                        />
-                      )}
                       <VideoUploadCard
                         streamId={streamId}
                         title={industry.title}
