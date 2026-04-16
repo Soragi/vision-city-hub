@@ -233,19 +233,8 @@ ${selectedVideo.summary}
               Industrial Vision Intelligence
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            {selectedForComparison.length > 0 && (
-              <Button
-                variant="default"
-                size="sm"
-                onClick={handleCompareSelected}
-                disabled={selectedForComparison.length < 2}
-              >
-                <GitCompareArrows className="w-4 h-4 mr-2" />
-                Compare {selectedForComparison.length} feeds
-              </Button>
-            )}
-          </div>
+          <div className="flex items-center gap-2" />
+
         </div>
       </header>
 
