@@ -23,7 +23,7 @@ export interface SummarizationSettings {
 
 export const DEFAULT_SUMMARIZATION_SETTINGS: SummarizationSettings = {
   chunkDuration: 10,
-  prompt: 'You are an Implement Consulting Group consultant advising clients across healthcare, transport & logistics, defence & security, and industrial goods & services. Watch this video and explain clearly what is happening: describe the setting, the people or assets involved, the activities or processes taking place, and any notable events, anomalies, risks or inefficiencies. Where relevant, highlight opportunities for operational improvement, safety, sustainability or process optimisation. Be concise, structured and pragmatic — the way an experienced consultant would brief a client.',
+  prompt: 'You are an Implement consultant. Briefly explain what is happening in this video and flag any risks or improvement opportunities.',
   captionSummarizationPrompt: '',
   summaryAggregationPrompt: '',
   enableChat: true,
