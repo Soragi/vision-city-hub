@@ -17,7 +17,6 @@ import { fileAPI, summarizationAPI } from "@/services/api";
 
 const Index = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
   const {
     videos,
     updateVideo,
@@ -27,7 +26,6 @@ const Index = () => {
     selectedStreamId,
     setSelectedStreamId,
   } = useVideoState();
-  const [selectedForComparison, setSelectedForComparison] = useState<number[]>([]);
 
   const handleVideoUpload = async (streamId: number, file: File) => {
     updateVideo(streamId, {
