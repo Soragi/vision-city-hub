@@ -8,50 +8,48 @@
 
 @layer base {
   :root {
-    /* Warm off-white canvas */
-    --background: 36 30% 96%;
-    --foreground: 160 25% 10%;
+    /* IM Consulting Group — warm cream + deep forest */
+    --background: 42 38% 92%;
+    --foreground: 168 18% 14%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 160 25% 10%;
+    --card: 42 42% 95%;
+    --card-foreground: 168 18% 14%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 160 25% 10%;
+    --popover: 42 42% 95%;
+    --popover-foreground: 168 18% 14%;
 
-    /* Deep forest/teal — Implement signature */
-    --primary: 162 45% 16%;
-    --primary-foreground: 36 30% 96%;
+    /* Deep forest — IM signature */
+    --primary: 168 22% 18%;
+    --primary-foreground: 42 38% 92%;
 
-    --secondary: 36 20% 92%;
-    --secondary-foreground: 160 25% 10%;
+    --secondary: 42 30% 88%;
+    --secondary-foreground: 168 18% 14%;
 
-    --muted: 36 15% 90%;
-    --muted-foreground: 160 10% 38%;
+    --muted: 42 25% 86%;
+    --muted-foreground: 168 10% 38%;
 
-    --accent: 18 70% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 168 22% 18%;
+    --accent-foreground: 42 38% 92%;
 
-    --destructive: 4 75% 50%;
+    --destructive: 4 70% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 160 10% 86%;
-    --input: 160 10% 86%;
-    --ring: 162 45% 16%;
+    --border: 168 12% 78%;
+    --input: 168 12% 78%;
+    --ring: 168 22% 18%;
 
-    --radius: 0.25rem;
+    --radius: 0.125rem;
 
-    /* Brand tokens */
-    --brand-forest: 162 45% 16%;
-    --brand-cream: 36 30% 96%;
-    --brand-sand: 36 25% 88%;
-    --brand-clay: 18 70% 55%;
-    --brand-ink: 160 25% 10%;
+    --brand-forest: 168 22% 18%;
+    --brand-cream: 42 38% 92%;
+    --brand-sand: 42 30% 85%;
+    --brand-ink: 168 18% 14%;
 
-    --video-bg: 36 20% 92%;
-    --video-border: 160 10% 86%;
+    --video-bg: 168 18% 14%;
+    --video-border: 168 12% 78%;
 
-    --chat-bg: 0 0% 100%;
-    --chat-input: 36 20% 94%;
+    --chat-bg: 42 42% 95%;
+    --chat-input: 42 30% 88%;
   }
 }
 

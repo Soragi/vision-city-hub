@@ -212,31 +212,31 @@ const Index = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <header className="bg-background border-b border-border px-10 py-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-baseline gap-4">
-            {/* Wordmark logo — Implement-style minimal */}
-            <div className="flex items-center gap-2.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-primary" />
-              <h1 className="font-serif text-2xl tracking-tight text-foreground">
-                Udder<span className="text-primary">.</span>
-              </h1>
+          <div className="flex items-center gap-6">
+            {/* IM Consulting Group wordmark */}
+            <div className="flex flex-col leading-none">
+              <span className="font-serif text-2xl tracking-tight text-foreground">IM</span>
+              <span className="text-[9px] uppercase tracking-[0.22em] text-muted-foreground mt-1">
+                Consulting Group
+              </span>
             </div>
-            <div className="h-5 w-px bg-border" />
-            <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              Vision Intelligence for Dairy Operations
+            <div className="h-8 w-px bg-border" />
+            <span className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+              Industrial Vision Intelligence
             </span>
           </div>
           <div className="flex items-center gap-2">
-          {selectedForComparison.length > 0 && (
-            <Button
-              variant="default"
-              size="sm"
-              onClick={handleCompareSelected}
-              disabled={selectedForComparison.length < 2}
-            >
-              <GitCompareArrows className="w-4 h-4 mr-2" />
-              Compare {selectedForComparison.length} Videos
-            </Button>
-          )}
+            {selectedForComparison.length > 0 && (
+              <Button
+                variant="default"
+                size="sm"
+                onClick={handleCompareSelected}
+                disabled={selectedForComparison.length < 2}
+              >
+                <GitCompareArrows className="w-4 h-4 mr-2" />
+                Compare {selectedForComparison.length} feeds
+              </Button>
+            )}
           </div>
         </div>
       </header>
@@ -255,9 +255,9 @@ const Index = () => {
               <div className="mb-6 flex items-end justify-between border-b border-border pb-4">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">01 — Live feeds</p>
-                  <h2 className="font-serif text-3xl text-foreground mb-1">Barn cameras</h2>
+                  <h2 className="font-serif text-3xl text-foreground mb-1">Operational footage</h2>
                   <p className="text-sm text-muted-foreground max-w-xl">
-                    Upload to Camera 1 (Main Parlour) first. The remaining stations provide supplementary perspectives across the milking floor.
+                    Upload to Camera 1 (primary line) first. The remaining stations capture supplementary perspectives across the production environment.
                   </p>
                 </div>
               </div>
@@ -335,8 +335,8 @@ const Index = () => {
             }}
             onGenerateHighlight={() => {
               toast({
-                title: "Generate Defect Report",
-                description: "Defect report generation feature coming soon",
+                title: "Generate report",
+                description: "Report generation coming soon",
               });
             }}
           />
