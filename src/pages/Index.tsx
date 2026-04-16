@@ -259,14 +259,14 @@ const Index = () => {
           {/* Video Grid */}
           <div className="flex-1 overflow-auto p-4 pt-0">{/* ... keep existing code */}
             <div className="h-full">
-              <div className="mb-6 flex items-end justify-between border-b border-border pb-4">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">01 — Live feeds</p>
-                  <h2 className="font-serif text-3xl text-foreground mb-1">Operational footage</h2>
-                  <p className="text-sm text-muted-foreground max-w-xl">
-                    Upload to Camera 1 (primary line) first. The remaining stations capture supplementary perspectives across the production environment.
-                  </p>
-                </div>
+              <div className="mb-6 border-b border-border pb-6">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">Hello,</p>
+                <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-4 leading-tight">
+                  we're Implement
+                </h2>
+                <p className="text-base text-muted-foreground max-w-xl leading-relaxed">
+                  We help organisations succeed with their most important transformations.
+                </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
