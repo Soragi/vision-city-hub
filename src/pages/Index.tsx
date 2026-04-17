@@ -7,8 +7,15 @@ import { Ship, Factory } from "lucide-react";
 
 const STREAM_INDUSTRIES = {
   1: { title: "Ferry Vehicle Inspector", icon: Ship },
-  2: { title: "Factory Production Inspector", icon: Factory },
+  2: { title: "Ferry Vehicle Inspector", icon: Ship },
+  3: { title: "Factory Production Inspector", icon: Factory },
+  4: { title: "Factory Production Inspector", icon: Factory },
 } as const;
+
+const USE_CASES = [
+  { title: "Ferry Vehicle Inspector", icon: Ship, streamIds: [1, 2] as const },
+  { title: "Factory Production Inspector", icon: Factory, streamIds: [3, 4] as const },
+] as const;
 import { useToast } from "@/hooks/use-toast";
 import { useVideoState } from "@/hooks/useVideoState";
 import { fileAPI, summarizationAPI } from "@/services/api";
@@ -257,27 +264,41 @@ ${selectedVideo.summary}
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[1, 2].map((streamId) => {
-                  const video = videos.get(streamId);
-                  const industry = STREAM_INDUSTRIES[streamId as keyof typeof STREAM_INDUSTRIES];
+              <div className="space-y-6">
+                {USE_CASES.map((useCase) => {
+                  const UseCaseIcon = useCase.icon;
                   return (
-                    <div key={streamId} className="relative">
-                      <VideoUploadCard
-                        streamId={streamId}
-                        title={industry.title}
-                        icon={industry.icon}
-                        onVideoUpload={handleVideoUpload}
-                        onVideoDelete={handleVideoDelete}
-                        fileId={video?.fileId}
-                        uploadProgress={video?.uploadProgress}
-                        status={video?.status}
-                        error={video?.error}
-                        isSelected={selectedStreamId === streamId}
-                        onSelect={setSelectedStreamId}
-                        isPrimary={streamId === 1}
-                      />
-                    </div>
+                    <section key={useCase.title}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <UseCaseIcon className="w-4 h-4 text-primary" strokeWidth={1.5} />
+                        <h3 className="font-serif text-lg text-foreground">{useCase.title}</h3>
+                        <div className="flex-1 h-px bg-border ml-2" />
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {useCase.streamIds.map((streamId) => {
+                          const video = videos.get(streamId);
+                          const industry = STREAM_INDUSTRIES[streamId as keyof typeof STREAM_INDUSTRIES];
+                          return (
+                            <div key={streamId} className="relative">
+                              <VideoUploadCard
+                                streamId={streamId}
+                                title={industry.title}
+                                icon={industry.icon}
+                                onVideoUpload={handleVideoUpload}
+                                onVideoDelete={handleVideoDelete}
+                                fileId={video?.fileId}
+                                uploadProgress={video?.uploadProgress}
+                                status={video?.status}
+                                error={video?.error}
+                                isSelected={selectedStreamId === streamId}
+                                onSelect={setSelectedStreamId}
+                                isPrimary={streamId === useCase.streamIds[0]}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </section>
                   );
                 })}
               </div>
