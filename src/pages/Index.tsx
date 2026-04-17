@@ -3,18 +3,18 @@ import ChatInterface from "@/components/ChatInterface";
 import ResponsePanel from "@/components/ResponsePanel";
 import SummarizationSettings from "@/components/SummarizationSettings";
 import { BackendHealthCheck } from "@/components/BackendHealthCheck";
-import { Ship, Factory } from "lucide-react";
+import { Truck, Gauge } from "lucide-react";
 
 const STREAM_INDUSTRIES = {
-  1: { title: "Ferry Vehicle Inspector", icon: Ship },
-  2: { title: "Ferry Vehicle Inspector", icon: Ship },
-  3: { title: "Factory Production Inspector", icon: Factory },
-  4: { title: "Factory Production Inspector", icon: Factory },
+  1: { title: "Dashcam Incident Review", icon: Truck },
+  2: { title: "Dashcam Incident Review", icon: Truck },
+  3: { title: "Fleet Driver Behaviour Monitor", icon: Gauge },
+  4: { title: "Fleet Driver Behaviour Monitor", icon: Gauge },
 } as const;
 
 const USE_CASES = [
-  { title: "Ferry Vehicle Inspector", icon: Ship, streamIds: [1, 2] as const },
-  { title: "Factory Production Inspector", icon: Factory, streamIds: [3, 4] as const },
+  { title: "Dashcam Incident Review", icon: Truck, streamIds: [1, 2] as const },
+  { title: "Fleet Driver Behaviour Monitor", icon: Gauge, streamIds: [3, 4] as const },
 ] as const;
 import { useToast } from "@/hooks/use-toast";
 import { useVideoState } from "@/hooks/useVideoState";

@@ -23,9 +23,9 @@ export interface SummarizationSettings {
 
 export const DEFAULT_SUMMARIZATION_SETTINGS: SummarizationSettings = {
   chunkDuration: 10,
-  prompt: 'Watch this camera footage and describe clearly what you see. Identify the setting, the people, vehicles or equipment present, and the activities taking place. Note any anomalies, defects, safety issues or unusual events. Keep the summary concise, factual and easy to understand.',
-  captionSummarizationPrompt: 'Summarise the following camera captions. For each time segment, write one bullet in the format start_time:end_time: short description of what is visible and what is happening. Keep it factual and concise.',
-  summaryAggregationPrompt: 'Combine the bullet points below into a clear, concise summary of what the camera observed. Merge overlapping segments. Group findings under: What was seen, Activities, and Notable events or issues.',
+  prompt: 'Watch this truck dashcam footage and describe clearly what you see. Note the road and weather conditions, surrounding vehicles and road users, the truck driver behaviour, and any traffic signs or signals. Flag any incidents, near-misses, harsh braking, lane departures, collisions or unsafe driving relevant to an insurance claim. Keep the description factual, concise and time-aware.',
+  captionSummarizationPrompt: 'Summarise the following truck dashcam captions. For each time segment, write one bullet in the format start_time:end_time: short description of road conditions, traffic, driver actions, and any incidents or unsafe events.',
+  summaryAggregationPrompt: 'Combine the bullet points below into a clear, concise dashcam incident report for an insurance claim. Merge overlapping segments. Group findings under: Route and conditions, Driver behaviour, and Incidents or claim-relevant events (with timestamps).',
   enableChat: true,
   enableChatHistory: true,
   enableAudio: false,
