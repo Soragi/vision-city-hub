@@ -3,13 +3,11 @@ import ChatInterface from "@/components/ChatInterface";
 import ResponsePanel from "@/components/ResponsePanel";
 import SummarizationSettings from "@/components/SummarizationSettings";
 import { BackendHealthCheck } from "@/components/BackendHealthCheck";
-import { HeartPulse, Truck, ShieldCheck, Factory } from "lucide-react";
+import { Ship, Factory } from "lucide-react";
 
 const STREAM_INDUSTRIES = {
-  1: { title: "Healthcare", icon: HeartPulse },
-  2: { title: "Transport & Logistics", icon: Truck },
-  3: { title: "Defence & Security", icon: ShieldCheck },
-  4: { title: "Industrial Goods & Services", icon: Factory },
+  1: { title: "Ferry Vehicle Inspector", icon: Ship },
+  2: { title: "Factory Production Inspector", icon: Factory },
 } as const;
 import { useToast } from "@/hooks/use-toast";
 import { useVideoState } from "@/hooks/useVideoState";
@@ -259,8 +257,8 @@ ${selectedVideo.summary}
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-                {[1, 2, 3, 4].map((streamId) => {
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[1, 2].map((streamId) => {
                   const video = videos.get(streamId);
                   const industry = STREAM_INDUSTRIES[streamId as keyof typeof STREAM_INDUSTRIES];
                   return (
