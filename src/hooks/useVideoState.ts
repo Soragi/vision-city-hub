@@ -23,9 +23,9 @@ export interface SummarizationSettings {
 
 export const DEFAULT_SUMMARIZATION_SETTINGS: SummarizationSettings = {
   chunkDuration: 10,
-  prompt: 'You are an Implement Consulting Group consultant advising clients across healthcare, transport & logistics, defence & security, and industrial goods & services. Watch this video and explain clearly what is happening: describe the setting, the people or assets involved, the activities or processes taking place, and any notable events, anomalies, risks or inefficiencies. Where relevant, highlight opportunities for operational improvement, safety, sustainability or process optimisation. Be concise, structured and pragmatic — the way an experienced consultant would brief a client.',
-  captionSummarizationPrompt: 'Summarise the following video captions from an Implement Consulting Group perspective. For each time segment, write one bullet in the format start_time:end_time: concise description of what is happening, who is involved, and any notable risks, inefficiencies or improvement opportunities. Use clear, pragmatic consulting language. Return only the bullet points.',
-  summaryAggregationPrompt: 'You are an Implement Consulting Group analyst. Aggregate the bullet points below into a structured client-ready briefing. Merge adjacent or overlapping time segments describing the same activity. Group findings under these headings: Operations & Process, Safety & Compliance, Efficiency & Performance, and Risks & Recommendations. Keep each bullet concise, specific and actionable.',
+  prompt: 'Watch this camera footage and describe clearly what you see. Identify the setting, the people, vehicles or equipment present, and the activities taking place. Note any anomalies, defects, safety issues or unusual events. Keep the summary concise, factual and easy to understand.',
+  captionSummarizationPrompt: 'Summarise the following camera captions. For each time segment, write one bullet in the format start_time:end_time: short description of what is visible and what is happening. Keep it factual and concise.',
+  summaryAggregationPrompt: 'Combine the bullet points below into a clear, concise summary of what the camera observed. Merge overlapping segments. Group findings under: What was seen, Activities, and Notable events or issues.',
   enableChat: true,
   enableChatHistory: true,
   enableAudio: false,
