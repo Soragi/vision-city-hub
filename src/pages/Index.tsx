@@ -7,8 +7,15 @@ import { Ship, Factory } from "lucide-react";
 
 const STREAM_INDUSTRIES = {
   1: { title: "Ferry Vehicle Inspector", icon: Ship },
-  2: { title: "Factory Production Inspector", icon: Factory },
+  2: { title: "Ferry Vehicle Inspector", icon: Ship },
+  3: { title: "Factory Production Inspector", icon: Factory },
+  4: { title: "Factory Production Inspector", icon: Factory },
 } as const;
+
+const USE_CASES = [
+  { title: "Ferry Vehicle Inspector", icon: Ship, streamIds: [1, 2] as const },
+  { title: "Factory Production Inspector", icon: Factory, streamIds: [3, 4] as const },
+] as const;
 import { useToast } from "@/hooks/use-toast";
 import { useVideoState } from "@/hooks/useVideoState";
 import { fileAPI, summarizationAPI } from "@/services/api";
