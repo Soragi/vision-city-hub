@@ -128,7 +128,7 @@ const Index = () => {
           </div>
         </section>
 
-        <ProgramOverview />
+        
       </main>
 
       <NvFooter />
