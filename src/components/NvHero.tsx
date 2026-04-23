@@ -25,10 +25,10 @@ const NvHero = () => {
               <span aria-hidden>→</span>
             </a>
             <a
-              href="#schedule"
+              href="#workflows"
               className="inline-flex items-center gap-2 border border-white/30 hover:border-white text-white font-semibold px-6 py-3 rounded-sm transition-colors"
             >
-              View 2026 schedule
+              Explore workflows
             </a>
           </div>
         </div>

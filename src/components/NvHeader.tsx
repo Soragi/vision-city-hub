@@ -2,7 +2,7 @@ const NAV = [
   { label: "Overview", href: "#overview" },
   { label: "Masterclass", href: "#masterclass" },
   { label: "Workflows", href: "#workflows" },
-  { label: "Schedule", href: "#schedule" },
+  
 ];
 
 const NvHeader = () => {
