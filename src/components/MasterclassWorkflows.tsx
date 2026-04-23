@@ -11,6 +11,7 @@ interface Props {
   summary: string | null;
   isProcessing: boolean;
   settings: SummarizationSettings;
+  onSettingsChange: (settings: SummarizationSettings) => void;
   onSummaryUpdate: (s: string) => void;
   onStatusChange: (s: 'summarizing' | 'summarized' | 'error') => void;
   onChunkDurationChange: (v: number) => void;
@@ -22,6 +23,7 @@ const MasterclassWorkflows = ({
   summary,
   isProcessing,
   settings,
+  onSettingsChange,
   onSummaryUpdate,
   onStatusChange,
   onChunkDurationChange,
@@ -57,6 +59,7 @@ const MasterclassWorkflows = ({
               summary={summary}
               isProcessing={isProcessing}
               settings={settings}
+              onSettingsChange={onSettingsChange}
               onSummaryUpdate={onSummaryUpdate}
               onStatusChange={onStatusChange}
               onChunkDurationChange={onChunkDurationChange}

@@ -119,6 +119,7 @@ const Index = () => {
               summary={video?.summary ?? null}
               isProcessing={video?.status === 'summarizing'}
               settings={summarizationSettings}
+              onSettingsChange={setSummarizationSettings}
               onSummaryUpdate={(s) => updateVideo(STREAM_ID, { summary: s })}
               onStatusChange={(status) => updateVideo(STREAM_ID, { status })}
               onChunkDurationChange={(v) =>
