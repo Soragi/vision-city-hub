@@ -3,7 +3,7 @@ import NvHero from "@/components/NvHero";
 import NvFooter from "@/components/NvFooter";
 import MasterclassUpload from "@/components/MasterclassUpload";
 import MasterclassWorkflows from "@/components/MasterclassWorkflows";
-import ProgramOverview from "@/components/ProgramOverview";
+
 import { BackendHealthCheck } from "@/components/BackendHealthCheck";
 import { useToast } from "@/hooks/use-toast";
 import { useVideoState } from "@/hooks/useVideoState";
