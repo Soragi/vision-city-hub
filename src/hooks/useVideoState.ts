@@ -22,14 +22,14 @@ export interface SummarizationSettings {
 }
 
 export const DEFAULT_SUMMARIZATION_SETTINGS: SummarizationSettings = {
-  chunkDuration: 10,
-  prompt: 'Watch this truck dashcam footage and describe clearly what you see. Note the road and weather conditions, surrounding vehicles and road users, the truck driver behaviour, and any traffic signs or signals. Flag any incidents, near-misses, harsh braking, lane departures, collisions or unsafe driving relevant to an insurance claim. Keep the description factual, concise and time-aware.',
-  captionSummarizationPrompt: 'Summarise the following truck dashcam captions. For each time segment, write one bullet in the format start_time:end_time: short description of road conditions, traffic, driver actions, and any incidents or unsafe events.',
-  summaryAggregationPrompt: 'Combine the bullet points below into a clear, concise dashcam incident report for an insurance claim. Merge overlapping segments. Group findings under: Route and conditions, Driver behaviour, and Incidents or claim-relevant events (with timestamps).',
+  chunkDuration: 60,
+  prompt: 'You are analysing an NVIDIA Masterclass recording. Watch this segment of the video and describe clearly what is happening: the speaker, the topic being presented, any technical concepts, demos, slides, code, or product references shown. Capture the key takeaways and any noteworthy quotes. Keep it factual, structured, and easy to follow.',
+  captionSummarizationPrompt: 'Summarise the following NVIDIA Masterclass captions. For each time segment, write one bullet in the format start_time:end_time: short description of the topic, speaker, demo, or key point covered.',
+  summaryAggregationPrompt: 'Combine the bullet points below into a clear NVIDIA Masterclass summary. Start with a section titled "TL;DR" containing 3 to 5 bold one-line highlights of the most important takeaways. Then add a section titled "Full Summary" with timestamped chapters in the format [hh:mm:ss] Chapter title — short description of what is covered. Group related segments into chapters. Be concise, technical, and accurate.',
   enableChat: true,
   enableChatHistory: true,
   enableAudio: false,
-  model: '', // Let backend use default model
+  model: '',
 };
 
 export const useVideoState = () => {

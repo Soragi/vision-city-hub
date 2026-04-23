@@ -2,54 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Implement Consulting Group inspired — Scandinavian minimal, editorial */
+/* NVIDIA Partner Expert — Masterclass VSS Review */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    /* IM Consulting Group — warm cream + deep forest */
-    --background: 42 38% 92%;
-    --foreground: 168 18% 14%;
+    /* NVIDIA palette — light surface, black hero, signature green */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
 
-    --card: 42 42% 95%;
-    --card-foreground: 168 18% 14%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
 
-    --popover: 42 42% 95%;
-    --popover-foreground: 168 18% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
 
-    /* Deep forest — IM signature */
-    --primary: 168 22% 18%;
-    --primary-foreground: 42 38% 92%;
+    /* NVIDIA green #76B900 */
+    --primary: 80 100% 36%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 42 30% 88%;
-    --secondary-foreground: 168 18% 14%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 8%;
 
-    --muted: 42 25% 86%;
-    --muted-foreground: 168 10% 38%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 168 22% 18%;
-    --accent-foreground: 42 38% 92%;
+    --accent: 80 100% 36%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 4 70% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 168 12% 78%;
-    --input: 168 12% 78%;
-    --ring: 168 22% 18%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 80 100% 36%;
 
-    --radius: 0.125rem;
+    --radius: 0.25rem;
 
-    --brand-forest: 168 22% 18%;
-    --brand-cream: 42 38% 92%;
-    --brand-sand: 42 30% 85%;
-    --brand-ink: 168 18% 14%;
+    --nv-black: 0 0% 0%;
+    --nv-green: 80 100% 36%;
+    --nv-offwhite: 0 0% 97%;
+    --nv-grey: 0 0% 40%;
 
-    --video-bg: 168 18% 14%;
-    --video-border: 168 12% 78%;
+    --video-bg: 0 0% 6%;
+    --video-border: 0 0% 90%;
 
-    --chat-bg: 42 42% 95%;
-    --chat-input: 42 30% 88%;
+    --chat-bg: 0 0% 100%;
+    --chat-input: 0 0% 96%;
   }
 }
 
@@ -61,12 +61,12 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, sans-serif;
-    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, .font-serif {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 400;
-    letter-spacing: -0.02em;
+  h1, h2, h3, h4 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
   }
 }
