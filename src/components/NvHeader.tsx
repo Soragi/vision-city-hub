@@ -30,15 +30,6 @@ const NvHeader = () => {
             </a>
           ))}
         </nav>
-        <div className="flex items-center">
-          <a
-            href="#masterclass"
-            className="hidden sm:inline-flex items-center gap-1 bg-[hsl(var(--nv-green))] hover:bg-[hsl(var(--nv-green))]/90 text-black text-xs font-semibold px-3 py-2 rounded-sm transition-colors"
-          >
-            Upload Masterclass
-            <span aria-hidden>→</span>
-          </a>
-        </div>
       </div>
     </header>
   );
