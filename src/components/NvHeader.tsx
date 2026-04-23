@@ -1,8 +1,5 @@
 const NAV = [
   { label: "Overview", href: "#overview" },
-  { label: "Masterclass", href: "#masterclass" },
-  { label: "Workflows", href: "#workflows" },
-  
 ];
 
 const NvHeader = () => {
