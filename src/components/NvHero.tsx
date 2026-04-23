@@ -18,17 +18,13 @@ const NvHero = () => {
           </p>
           <div className="flex flex-wrap gap-3">
             <a
-              href="#masterclass"
+              href="https://www.nvidia.com/en-gb/about-nvidia/partners/partner-expert-program/"
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center gap-2 bg-[hsl(var(--nv-green))] hover:bg-[hsl(var(--nv-green))]/90 text-black font-semibold px-6 py-3 rounded-sm transition-colors"
             >
-              Upload Masterclass
+              Learn more
               <span aria-hidden>→</span>
-            </a>
-            <a
-              href="#workflows"
-              className="inline-flex items-center gap-2 border border-white/30 hover:border-white text-white font-semibold px-6 py-3 rounded-sm transition-colors"
-            >
-              Explore workflows
             </a>
           </div>
         </div>
