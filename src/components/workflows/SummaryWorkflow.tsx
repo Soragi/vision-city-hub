@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2, Download, Sparkles, Clock } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Loader2, Download, Sparkles, Clock, ChevronDown, ChevronUp, SlidersHorizontal } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { summarizationAPI } from "@/services/api";
 import type { SummarizationSettings } from "@/hooks/useVideoState";
@@ -11,6 +14,7 @@ interface Props {
   summary: string | null;
   isProcessing: boolean;
   settings: SummarizationSettings;
+  onSettingsChange: (settings: SummarizationSettings) => void;
   onSummaryUpdate: (summary: string) => void;
   onStatusChange: (status: 'summarizing' | 'summarized' | 'error') => void;
   onChunkDurationChange: (value: number) => void;
@@ -50,12 +54,18 @@ const SummaryWorkflow = ({
   summary,
   isProcessing,
   settings,
+  onSettingsChange,
   onSummaryUpdate,
   onStatusChange,
   onChunkDurationChange,
 }: Props) => {
   const { toast } = useToast();
   const [localSummary, setLocalSummary] = useState(summary ?? "");
+  const [showPrompts, setShowPrompts] = useState(false);
+
+  const updateSetting = <K extends keyof SummarizationSettings>(key: K, value: SummarizationSettings[K]) => {
+    onSettingsChange({ ...settings, [key]: value });
+  };
 
   const effectiveSummary = summary ?? localSummary;
   const parsed = useMemo(() => parseSummary(effectiveSummary), [effectiveSummary]);
@@ -162,6 +172,54 @@ ${effectiveSummary}
           </Button>
         </div>
       </div>
+
+      <Collapsible open={showPrompts} onOpenChange={setShowPrompts}>
+        <CollapsibleTrigger asChild>
+          <Button variant="outline" size="sm" className="rounded-sm">
+            <SlidersHorizontal className="w-3.5 h-3.5 mr-2" />
+            Advanced prompts
+            {showPrompts ? <ChevronUp className="w-3.5 h-3.5 ml-2" /> : <ChevronDown className="w-3.5 h-3.5 ml-2" />}
+          </Button>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="space-y-4 pt-4">
+          <div className="space-y-2">
+            <Label htmlFor="prompt" className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+              Analysis prompt
+            </Label>
+            <Textarea
+              id="prompt"
+              value={settings.prompt}
+              onChange={(e) => updateSetting('prompt', e.target.value)}
+              placeholder="Describe what the VLM should look for in each chunk…"
+              className="min-h-[90px] text-xs resize-y"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="caption-prompt" className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+              Caption summarization prompt
+            </Label>
+            <Textarea
+              id="caption-prompt"
+              value={settings.captionSummarizationPrompt}
+              onChange={(e) => updateSetting('captionSummarizationPrompt', e.target.value)}
+              placeholder="How per-chunk captions should be summarised…"
+              className="min-h-[80px] text-xs resize-y"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="aggregation-prompt" className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+              Summary aggregation prompt
+            </Label>
+            <Textarea
+              id="aggregation-prompt"
+              value={settings.summaryAggregationPrompt}
+              onChange={(e) => updateSetting('summaryAggregationPrompt', e.target.value)}
+              placeholder="How chunk summaries should be combined into TL;DR + chapters…"
+              className="min-h-[80px] text-xs resize-y"
+            />
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
 
       {!effectiveSummary && !isProcessing && (
         <div className="border border-dashed border-border rounded-md p-10 text-center text-muted-foreground text-sm">
