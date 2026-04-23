@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import { summarizationAPI } from '@/services/api';
 
@@ -10,48 +9,38 @@ export const BackendHealthCheck = () => {
   useEffect(() => {
     const checkHealth = async () => {
       try {
-        console.log('[Health Check] Checking backend connectivity...');
         await summarizationAPI.getModels();
-        console.log('[Health Check] Backend is healthy');
         setStatus('healthy');
       } catch (err) {
-        console.error('[Health Check] Backend check failed:', err);
         setStatus('error');
         setError(err instanceof Error ? err.message : 'Unknown error');
       }
     };
-
     checkHealth();
   }, []);
 
+  const baseClass = "inline-flex items-center gap-2 text-[11px] font-medium px-2.5 py-1 rounded-sm";
+
   if (status === 'checking') {
     return (
-      <Alert className="mb-4">
-        <Loader2 className="h-4 w-4 animate-spin" />
-        <AlertDescription className="ml-2">
-          Checking NVIDIA VSS backend connection...
-        </AlertDescription>
-      </Alert>
+      <span className={`${baseClass} bg-secondary text-muted-foreground`}>
+        <Loader2 className="w-3 h-3 animate-spin" />
+        Connecting to VSS backend…
+      </span>
     );
   }
-
   if (status === 'error') {
     return (
-      <Alert variant="destructive" className="mb-4">
-        <XCircle className="h-4 w-4" />
-        <AlertDescription className="ml-2">
-          Backend connection failed: {error}
-        </AlertDescription>
-      </Alert>
+      <span className={`${baseClass} bg-destructive/15 text-destructive`} title={error}>
+        <XCircle className="w-3 h-3" />
+        VSS backend unreachable
+      </span>
     );
   }
-
   return (
-    <Alert className="mb-4 border-green-500/50 bg-green-500/10">
-      <CheckCircle2 className="h-4 w-4 text-green-500" />
-      <AlertDescription className="ml-2 text-green-500">
-        Connected to NVIDIA VSS backend
-      </AlertDescription>
-    </Alert>
+    <span className={`${baseClass} bg-[hsl(var(--nv-green))]/15 text-[hsl(var(--nv-green))]`}>
+      <CheckCircle2 className="w-3 h-3" />
+      VSS backend connected
+    </span>
   );
 };
